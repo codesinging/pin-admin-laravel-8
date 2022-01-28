@@ -1,9 +1,11 @@
-/.idea
+.idea
+.vscode
 .DS_Store
-/vendor
+vendor
 Thumbs.db
 composer.lock
+.php_cs
 .php_cs.cache
-/phpunit.xml
+phpunit.xml
 .phpunit.result.cache
-/.vscode
+.php-cs-fixer.cache
