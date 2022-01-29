@@ -6,12 +6,23 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use CodeSinging\PinAdmin\Console\Commands\ListCommand;
 use Illuminate\Support\ServiceProvider;
 
 class PinAdminServiceProvider extends ServiceProvider
 {
     /**
+     * 控制台命令
+     *
+     * @var array
+     */
+    protected array $commands = [
+        ListCommand::class,
+    ];
+
+    /**
      * 注册 PinAdmin 服务
+     *
      * @return void
      */
     public function register()
@@ -21,19 +32,33 @@ class PinAdminServiceProvider extends ServiceProvider
 
     /**
      * 启动 PinAdmin 服务
+     *
      * @return void
      */
     public function boot()
     {
-
+        if ($this->app->runningInConsole()){
+            $this->registerCommands();
+        }
     }
 
     /**
      * 绑定服务到容器
+     *
      * @return void
      */
-    public function registerBinding()
+    protected function registerBinding()
     {
         $this->app->singleton(PinAdmin::LABEL, PinAdmin::class);
+    }
+
+    /**
+     * 注册控制台命令
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands($this->commands);
     }
 }
