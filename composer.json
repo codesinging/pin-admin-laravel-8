@@ -12,6 +12,9 @@
         "php": "^7.4|^8.0",
         "laravel/framework": "^8.81"
     },
+    "require-dev": {
+        "orchestra/testbench": "^6.24"
+    },
     "autoload": {
         "psr-4": {
             "CodeSinging\\PinAdmin\\": "src"
@@ -19,10 +22,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "CodeSinging\\PinAdmin\\Tests\\": "tests"
+            "Tests\\": "tests"
         }
     },
-    "require-dev": {
-        "orchestra/testbench": "^6.24"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CodeSinging\\PinAdmin\\Kernel\\PinAdminServiceProvider"
+            ],
+            "aliases": {
+                "Admin": "CodeSinging\\PinAdmin\\Kernel\\Admin"
+            }
+        }
     }
 }
