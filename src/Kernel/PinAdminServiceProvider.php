@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use CodeSinging\PinAdmin\Console\Commands\AdminCommand;
 use CodeSinging\PinAdmin\Console\Commands\ListCommand;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +18,7 @@ class PinAdminServiceProvider extends ServiceProvider
      * @var array
      */
     protected array $commands = [
+        AdminCommand::class,
         ListCommand::class,
     ];
 
