@@ -6,6 +6,7 @@
 
 namespace Tests\Kernel;
 
+use CodeSinging\PinAdmin\Kernel\Application;
 use CodeSinging\PinAdmin\Kernel\PinAdmin;
 use Tests\TestCase;
 
@@ -18,5 +19,87 @@ class PinAdminTest extends TestCase
         self::assertEquals(PinAdmin::LABEL, $admin->label());
         self::assertEquals(PinAdmin::LABEL . '_user', $admin->label('user'));
         self::assertEquals(PinAdmin::LABEL . '-config', $admin->label('config', '-'));
+    }
+
+    public function testPackagePath()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(dirname(__DIR__), $admin->packagePath('tests'));
+        self::assertEquals(__DIR__, $admin->packagePath('tests', 'Kernel'));
+    }
+
+    public function testBaseDirectory()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(PinAdmin::BASE_DIRECTORY, $admin->baseDirectory());
+        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->baseDirectory('Admin'));
+        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers', $admin->baseDirectory('Admin', 'Controllers'));
+    }
+
+    public function testBasePath()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY), $admin->basePath());
+        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $admin->basePath('Admin'));
+        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $admin->basePath('Admin', 'Controllers'));
+    }
+
+    public function testIsInstalled()
+    {
+        self::assertIsBool((new PinAdmin())->isInstalled());
+    }
+
+    public function testIndexes()
+    {
+        self::assertIsArray((new PinAdmin())->indexes());
+    }
+
+    public function testBoot()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEmpty($admin->applications());
+
+        $admin->boot('admin');
+        self::assertCount(1, $admin->applications());
+        self::assertArrayHasKey('admin', $admin->applications());
+    }
+
+    public function testApplication()
+    {
+        $admin = new PinAdmin();
+        $admin->boot('admin');
+        self::assertInstanceOf(Application::class, $admin->application('admin'));
+    }
+
+    public function testApplications()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEmpty($admin->applications());
+
+        $admin->boot('admin');
+        self::assertCount(1, $admin->applications());
+        self::assertArrayHasKey('admin', $admin->applications());
+
+        $admin->boot('user');
+        self::assertCount(2, $admin->applications());
+        self::assertArrayHasKey('user', $admin->applications());
+    }
+
+    public function testCall()
+    {
+        $admin = new PinAdmin();
+        $admin->boot('admin');
+
+        self::assertEquals('admin', $admin->name());
+        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->directory());
+
+        self::assertEquals('App\\PinAdmin\\Admin', $admin->getNamespace());
+        self::assertEquals('App\\PinAdmin\\Admin\\Controllers', $admin->getNamespace('Controllers'));
+        self::assertEquals('App\\PinAdmin\\Admin\\Controllers\\IndexController.php', $admin->getNamespace('Controllers', 'IndexController.php'));
     }
 }
