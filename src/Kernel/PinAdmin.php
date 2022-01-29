@@ -64,6 +64,14 @@ class PinAdmin
     protected Application $application;
 
     /**
+     * 构造函数
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
      * 获取 PinAdmin 标记
      *
      * @param string|null $suffix
