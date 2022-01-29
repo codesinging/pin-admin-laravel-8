@@ -6,6 +6,15 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+/**
+ * @method string name()
+ * @method string directory(...$paths)
+ * @method string path(...$paths)
+ * @method string getNamespace(...$paths)
+ * @method string routePrefix()
+ * @method string link(string $path = '', array $parameters = [])
+ * @method array|mixed config(string $key = null, $default = null)
+ */
 class PinAdmin
 {
     /**

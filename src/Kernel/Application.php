@@ -101,23 +101,6 @@ class Application
     }
 
     /**
-     * 获取 PinAdmin 配置值
-     *
-     * @param string|null $key
-     * @param null|mixed $default
-     *
-     * @return $this|array|mixed
-     */
-    public function config(string $key = null, $default = null)
-    {
-        if (is_null($key)) {
-            return config($this->name());
-        }
-
-        return config($this->name() . '.' . $key, $default);
-    }
-
-    /**
      * 获取应用的路由前缀
      *
      * @return string
@@ -142,5 +125,22 @@ class Application
         $parameters and $link .= '?' . http_build_query($parameters);
 
         return $link;
+    }
+
+    /**
+     * 获取 PinAdmin 配置值
+     *
+     * @param string|null $key
+     * @param null|mixed $default
+     *
+     * @return array|mixed
+     */
+    public function config(string $key = null, $default = null)
+    {
+        if (is_null($key)) {
+            return config($this->name());
+        }
+
+        return config($this->name() . '.' . $key, $default);
     }
 }
