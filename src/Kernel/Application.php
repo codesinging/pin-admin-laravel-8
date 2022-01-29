@@ -36,20 +36,11 @@ class Application
     protected string $directory;
 
     /**
-     * 应用启动参数
-     *
-     * @var array
-     */
-    protected array $options;
-
-    /**
      * @param string $name
-     * @param array $options
      */
-    public function __construct(string $name, array $options = [])
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->options = $options;
         $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . Str::studly($name);
     }
 
@@ -101,13 +92,30 @@ class Application
     }
 
     /**
+     * 获取 PinAdmin 配置值
+     *
+     * @param string|null $key
+     * @param null|mixed $default
+     *
+     * @return array|mixed
+     */
+    public function config(string $key = null, $default = null)
+    {
+        if (is_null($key)) {
+            return config($this->name());
+        }
+
+        return config($this->name() . '.' . $key, $default);
+    }
+
+    /**
      * 获取应用的路由前缀
      *
      * @return string
      */
     public function routePrefix(): string
     {
-        return $this->options['prefix'] ?? $this->name();
+        return $this->config('route_prefix', $this->name());
     }
 
     /**
@@ -125,22 +133,5 @@ class Application
         $parameters and $link .= '?' . http_build_query($parameters);
 
         return $link;
-    }
-
-    /**
-     * 获取 PinAdmin 配置值
-     *
-     * @param string|null $key
-     * @param null|mixed $default
-     *
-     * @return array|mixed
-     */
-    public function config(string $key = null, $default = null)
-    {
-        if (is_null($key)) {
-            return config($this->name());
-        }
-
-        return config($this->name() . '.' . $key, $default);
     }
 }

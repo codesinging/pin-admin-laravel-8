@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static string directory(...$paths)
  * @method static string path(...$paths)
  * @method static string getNamespace(...$paths)
+ * @method static array|mixed config(string $key = null, $default = null)
  * @method static string routePrefix()
  * @method static string link(string $path = '', array $parameters = [])
- * @method static array|mixed config(string $key = null, $default = null)
  */
 class Admin extends Facade
 {

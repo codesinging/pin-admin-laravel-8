@@ -44,7 +44,6 @@ class ApplicationTest extends TestCase
     public function testRoutePrefix()
     {
         self::assertEquals('admin', (new Application('admin'))->routePrefix());
-        self::assertEquals('admin123', (new Application('admin', ['prefix' => 'admin123']))->routePrefix());
     }
 
     public function testLink()
@@ -52,6 +51,5 @@ class ApplicationTest extends TestCase
         self::assertEquals('/admin', (new Application('admin'))->link());
         self::assertEquals('/admin/home', (new Application('admin'))->link('home'));
         self::assertEquals('/admin/home?id=1', (new Application('admin'))->link('home', ['id' => 1]));
-        self::assertEquals('/admin123', (new Application('admin', ['prefix' => 'admin123']))->link());
     }
 }
