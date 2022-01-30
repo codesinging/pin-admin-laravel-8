@@ -63,7 +63,7 @@ class PinAdminTest extends TestCase
 
         self::assertEmpty($admin->applications());
 
-        $admin->boot('admin');
+        $admin->load('admin')->boot('admin');
         self::assertCount(1, $admin->applications());
         self::assertArrayHasKey('admin', $admin->applications());
     }
@@ -71,7 +71,7 @@ class PinAdminTest extends TestCase
     public function testApplication()
     {
         $admin = new PinAdmin();
-        $admin->boot('admin');
+        $admin->load('admin')->boot('admin');
         self::assertInstanceOf(Application::class, $admin->application('admin'));
     }
 
@@ -81,11 +81,11 @@ class PinAdminTest extends TestCase
 
         self::assertEmpty($admin->applications());
 
-        $admin->boot('admin');
+        $admin->load('admin')->boot('admin');
         self::assertCount(1, $admin->applications());
         self::assertArrayHasKey('admin', $admin->applications());
 
-        $admin->boot('user');
+        $admin->load('user')->boot('user');
         self::assertCount(2, $admin->applications());
         self::assertArrayHasKey('user', $admin->applications());
     }
@@ -93,7 +93,7 @@ class PinAdminTest extends TestCase
     public function testCall()
     {
         $admin = new PinAdmin();
-        $admin->boot('admin');
+        $admin->load('admin')->boot('admin');
 
         self::assertEquals('admin', $admin->name());
         self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->directory());

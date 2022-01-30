@@ -139,16 +139,30 @@ class PinAdmin
     }
 
     /**
-     * 启动指定名称的 PinAdmin 应用
+     * 初始化指定名称的 PinAdmin 应用
      *
      * @param string $name
      * @param array $options
      *
      * @return $this
      */
-    public function boot(string $name, array $options = []): self
+    public function load(string $name, array $options = []): PinAdmin
     {
-        empty($this->applications[$name]) and $this->applications[$name] = new Application($name, $options);
+        if (empty($this->applications[$name])) {
+            $this->applications[$name] = new Application($name, $options);
+        }
+        return $this;
+    }
+
+    /**
+     * 启动指定名称的 PinAdmin 应用
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function boot(string $name): PinAdmin
+    {
         $this->application = $this->applications[$name];
         return $this;
     }
@@ -182,7 +196,7 @@ class PinAdmin
     {
         foreach ($this->indexes() as $name => $options) {
             if ($options['status']) {
-                $this->boot($name, $options);
+                $this->load($name, $options);
             }
         }
     }

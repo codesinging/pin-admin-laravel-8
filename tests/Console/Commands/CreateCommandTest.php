@@ -22,7 +22,7 @@ class CreateCommandTest extends TestCase
     {
         $this->artisan('admin:create admin');
 
-        Admin::boot('admin');
+        Admin::load('admin')->boot('admin');
 
         self::assertDirectoryExists(Admin::basePath());
         self::assertFileExists(Admin::basePath('indexes.php'));
@@ -37,6 +37,5 @@ class CreateCommandTest extends TestCase
 
         Admin::config(['route_prefix' => 'admin123']);
         self::assertEquals('admin123', Admin::config('route_prefix'));
-
     }
 }

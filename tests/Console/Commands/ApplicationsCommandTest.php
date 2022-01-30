@@ -13,6 +13,6 @@ class ApplicationsCommandTest extends TestCase
 {
     public function testCommand()
     {
-        $this->artisan('admin:applications')->assertExitCode(0);
+        $this->artisan('admin:apps')->assertExitCode(0);
     }
 }
