@@ -6,7 +6,6 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
-use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
 
 class Application
@@ -103,11 +102,12 @@ class Application
      */
     public function config(string $key = null, $default = null)
     {
+        $name = Admin::label($this->name(), '.');
         if (is_null($key)) {
-            return config($this->name());
+            return config($name);
         }
 
-        return config($this->name() . '.' . $key, $default);
+        return config($name . '.' . $key, $default);
     }
 
     /**
