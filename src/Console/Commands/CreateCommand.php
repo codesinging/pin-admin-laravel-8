@@ -66,7 +66,6 @@ class CreateCommand extends Command
      */
     protected array $directories = [
         'Controllers',
-        'Models',
         'Middleware',
         'Requests',
         'Database'
@@ -87,6 +86,7 @@ class CreateCommand extends Command
                 $this->createRoutes();
                 $this->createConfig();
                 $this->createControllers();
+                $this->createModels();
                 $this->updateIndexes();
             }
         } else {
@@ -168,6 +168,7 @@ class CreateCommand extends Command
                 '__DUMMY_UPPER_NAME__' => Str::upper($this->applicationName),
                 '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
                 '__DUMMY_NAME__' => $this->applicationName,
+                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
             ]
         );
     }
@@ -183,6 +184,24 @@ class CreateCommand extends Command
             $this->application->path('Controllers'),
             [
                 '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
+            ]
+        );
+    }
+
+    /**
+     * Create default application models.
+     */
+    private function createModels(): void
+    {
+        $this->title('Create application models');
+        $this->copyFiles(
+            Admin::packagePath('stubs/models'),
+            app_path('Models'),
+            [
+                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+            ],
+            [
+                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
             ]
         );
     }
