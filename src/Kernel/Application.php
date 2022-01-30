@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
 
 class Application
@@ -35,6 +36,13 @@ class Application
     protected array $options = [];
 
     /**
+     * 应用配置仓库
+     *
+     * @var Repository
+     */
+    protected Repository $config;
+
+    /**
      * @param string $name
      * @param array $options
      */
@@ -43,6 +51,7 @@ class Application
         $this->name = $name;
         $this->options = $options;
         $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . ($this->options['directory'] ?? Str::studly($name));
+        $this->initConfig();
     }
 
     /**
@@ -93,21 +102,36 @@ class Application
     }
 
     /**
+     * 初始化配置
+     *
+     * @return void
+     */
+    protected function initConfig()
+    {
+        if (file_exists($file = $this->path('config.php'))) {
+            $items = require($file);
+        }
+        $this->config = new Repository($items ?? []);
+    }
+
+    /**
      * 获取 PinAdmin 配置值
      *
-     * @param string|null $key
+     * @param string|array|null $key
      * @param null|mixed $default
      *
-     * @return array|mixed
+     * @return mixed|Repository|self
      */
-    public function config(string $key = null, $default = null)
+    public function config($key = null, $default = null)
     {
-        $name = Admin::label($this->name(), '.');
         if (is_null($key)) {
-            return config($name);
+            return $this->config;
         }
-
-        return config($name . '.' . $key, $default);
+        if (is_array($key)) {
+            $this->config->set($key);
+            return $this;
+        }
+        return $this->config->get($key, $default);
     }
 
     /**
