@@ -33,5 +33,10 @@ class CreateCommandTest extends TestCase
         self::assertFileExists(Admin::path('config.php'));
 
         self::assertEquals('Admin', Admin::config('name'));
+        self::assertEquals('admin', Admin::config('route_prefix'));
+
+        Admin::config(['route_prefix' => 'admin123']);
+        self::assertEquals('admin123', Admin::config('route_prefix'));
+
     }
 }

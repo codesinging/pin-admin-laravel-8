@@ -166,8 +166,10 @@ class CreateCommand extends Command
             Admin::packagePath('stubs', 'config.php'),
             $this->application->path('config.php'),
             [
-                '__DUMMY_ENV_APPLICATION_NAME__' => Str::upper(Admin::label() . '_' . $this->applicationName . '_NAME'),
-                '__DUMMY_APPLICATION_NAME__' => Str::studly($this->applicationName),
+                '__DUMMY_UPPER_LABEL__' => Str::upper(Admin::label()),
+                '__DUMMY_UPPER_NAME__' => Str::upper($this->applicationName),
+                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+                '__DUMMY_NAME__' => $this->applicationName,
             ]
         );
     }
