@@ -10,8 +10,11 @@ use CodeSinging\PinAdmin\Console\Commands\AdminCommand;
 use CodeSinging\PinAdmin\Console\Commands\ApplicationsCommand;
 use CodeSinging\PinAdmin\Console\Commands\CreateCommand;
 use CodeSinging\PinAdmin\Console\Commands\ListCommand;
+use CodeSinging\PinAdmin\Middleware\Auth;
 use CodeSinging\PinAdmin\Middleware\Boot;
+use CodeSinging\PinAdmin\Middleware\Guest;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class PinAdminServiceProvider extends ServiceProvider
@@ -30,10 +33,13 @@ class PinAdminServiceProvider extends ServiceProvider
 
     /**
      * PinAdmin 应用中间件
+     *
      * @var array|string[]
      */
     protected array $middlewares = [
         'admin.boot' => Boot::class,
+        'admin.auth' => Auth::class,
+        'admin.guest' => Guest::class,
     ];
 
     /**
@@ -66,11 +72,12 @@ class PinAdminServiceProvider extends ServiceProvider
             $this->registerCommands();
         }
 
-        if (!$this->app->routesAreCached()){
+        if (!$this->app->routesAreCached()) {
             $this->loadRoutes();
         }
 
         $this->registerMiddlewares();
+        $this->configureAuthentication();
     }
 
     /**
@@ -122,6 +129,21 @@ class PinAdminServiceProvider extends ServiceProvider
 
         foreach ($this->middlewareGroups as $key => $middlewareGroup) {
             $router->middlewareGroup($key, $middlewareGroup);
+        }
+    }
+
+    /**
+     * 配置授权认证的守卫和提供者
+     *
+     * @return void
+     */
+    protected function configureAuthentication()
+    {
+        $applications = Admin::applications();
+
+        foreach ($applications as $name => $application) {
+            Config::set('auth.guards.' . Admin::label($name), $application->config('auth_guard'));
+            Config::set('auth.providers.' . $application->config('auth_guard.provider'), $application->config('auth_provider'));
         }
     }
 }

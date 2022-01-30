@@ -215,11 +215,11 @@ class PinAdmin
     {
         $middlewares = ['web', 'admin.boot:' . $this->name()] + $this->config('middlewares', []);
 
-//        if ($auth) {
-//            $middlewares = array_merge($middlewares, ['admin.auth:' . $this->name()], $this->config('auth_middlewares', []));
-//        } else {
-//            $middlewares = array_merge($middlewares, ['admin.guest:' . $this->name()], $this->config('guest_middlewares', []));
-//        }
+        if ($auth) {
+            $middlewares = array_merge($middlewares, ['admin.auth:' . $this->name()], $this->config('auth_middlewares', []));
+        } else {
+            $middlewares = array_merge($middlewares, ['admin.guest:' . $this->name()], $this->config('guest_middlewares', []));
+        }
 
         Route::middleware($middlewares)
             ->prefix($this->routePrefix())
