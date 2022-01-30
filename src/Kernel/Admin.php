@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use Closure;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\Facade;
 
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static PinAdmin boot(string $name = null)
  * @method static Application application()
  * @method static Application[] applications()
+ * @method static PinAdmin authRoutes(Closure $closure)
+ * @method static PinAdmin guestRoutes(Closure $closure)
  * @method static string name()
  * @method static string directory(...$paths)
  * @method static string path(...$paths)

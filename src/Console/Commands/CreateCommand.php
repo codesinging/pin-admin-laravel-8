@@ -149,9 +149,7 @@ class CreateCommand extends Command
             Admin::packagePath('stubs', 'routes.php'),
             $this->application->path('routes.php'),
             [
-                '__DUMMY_LABEL__' => Admin::label(),
                 '__DUMMY_NAME__' => $this->applicationName,
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
             ]
         );
     }

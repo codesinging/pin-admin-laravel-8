@@ -6,6 +6,9 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use Closure;
+use Illuminate\Support\Facades\Route;
+
 /**
  * @method string name()
  * @method string directory(...$paths)
@@ -62,6 +65,20 @@ class PinAdmin
     public function __construct()
     {
         $this->initialize();
+    }
+
+    /**
+     * 初始化所有应用
+     *
+     * @return void
+     */
+    protected function initialize()
+    {
+        foreach ($this->indexes() as $name => $options) {
+            if ($options['status']) {
+                $this->load($name, $options);
+            }
+        }
     }
 
     /**
@@ -188,17 +205,53 @@ class PinAdmin
     }
 
     /**
-     * 初始化所有应用
+     * 设置 PinAdmin 应用组路由
+     * @param Closure $closure
+     * @param bool $auth
      *
      * @return void
      */
-    protected function initialize()
+    protected function groupRoutes(Closure $closure, bool $auth = false)
     {
-        foreach ($this->indexes() as $name => $options) {
-            if ($options['status']) {
-                $this->load($name, $options);
-            }
-        }
+        $middlewares = ['web', 'admin.boot:' . $this->name()] + $this->config('middlewares', []);
+
+//        if ($auth) {
+//            $middlewares = array_merge($middlewares, ['admin.auth:' . $this->name()], $this->config('auth_middlewares', []));
+//        } else {
+//            $middlewares = array_merge($middlewares, ['admin.guest:' . $this->name()], $this->config('guest_middlewares', []));
+//        }
+
+        Route::middleware($middlewares)
+            ->prefix($this->routePrefix())
+            ->group(function () use ($closure) {
+                call_user_func($closure);
+            });
+    }
+
+    /**
+     * 设置需要认证授权的 PinAdmin 应用组路由
+     *
+     * @param Closure $closure
+     *
+     * @return $this
+     */
+    public function authRoutes(Closure $closure): PinAdmin
+    {
+        $this->groupRoutes($closure, true);
+        return $this;
+    }
+
+    /**
+     * 设置不需要认证授权的 PinAdmin 应用组路由
+     *
+     * @param Closure $closure
+     *
+     * @return $this
+     */
+    public function guestRoutes(Closure $closure): PinAdmin
+    {
+        $this->groupRoutes($closure, false);
+        return $this;
     }
 
     /**

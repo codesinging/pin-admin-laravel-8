@@ -102,7 +102,6 @@ class PinAdminServiceProvider extends ServiceProvider
     {
         $applications = Admin::applications();
         foreach ($applications as $application) {
-            dump($application->path('routes.php'));
             $this->loadRoutesFrom($application->path('routes.php'));
         }
     }
