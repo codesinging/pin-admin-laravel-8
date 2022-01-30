@@ -17,7 +17,7 @@ class ApplicationsCommand extends Command
      *
      * @var string
      */
-    protected $signature = PinAdmin::LABEL . ':applications';
+    protected $signature = PinAdmin::LABEL . ':apps';
 
     /**
      * The console command description.
@@ -46,10 +46,8 @@ class ApplicationsCommand extends Command
             $data[] = [
                 count($data) + 1,
                 $application['name'],
-                $application['prefix'],
-                $application['status'] ? 'true' : 'false'
             ];
         }
-        $this->table(['Index', 'Name', 'Prefix', 'Status'], $data);
+        $this->table(['Index', 'Name'], $data);
     }
 }
