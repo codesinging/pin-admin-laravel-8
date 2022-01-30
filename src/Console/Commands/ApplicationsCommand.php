@@ -42,12 +42,14 @@ class ApplicationsCommand extends Command
         $this->title('All the PinAdmin applications');
         $indexes = Admin::indexes();
         $data = [];
-        foreach ($indexes as $application) {
+        foreach ($indexes as $name => $options) {
             $data[] = [
                 count($data) + 1,
-                $application['name'],
+                $options['name'],
+                $options['directory'],
+                $options['status'] ? 'true' : 'false'
             ];
         }
-        $this->table(['Index', 'Name'], $data);
+        $this->table(['Index', 'Name', 'Directory', 'Status'], $data);
     }
 }

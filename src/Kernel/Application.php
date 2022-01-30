@@ -17,13 +17,6 @@ class Application
     const BASE_DIRECTORY = PinAdmin::BASE_DIRECTORY;
 
     /**
-     * 应用路由文件
-     *
-     * @var string
-     */
-    protected static string $routeFilename = 'routes.php';
-
-    /**
      * 应用名称
      *
      * @var string
@@ -36,12 +29,21 @@ class Application
     protected string $directory;
 
     /**
-     * @param string $name
+     * 应用启动参数
+     *
+     * @var array
      */
-    public function __construct(string $name)
+    protected array $options = [];
+
+    /**
+     * @param string $name
+     * @param array $options
+     */
+    public function __construct(string $name, array $options = [])
     {
         $this->name = $name;
-        $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . Str::studly($name);
+        $this->options = $options;
+        $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . ($this->options['directory'] ?? Str::studly($name));
     }
 
     /**

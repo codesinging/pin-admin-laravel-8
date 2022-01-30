@@ -43,13 +43,6 @@ class PinAdmin
     const BASE_DIRECTORY = 'PinAdmin';
 
     /**
-     * 应用索引文件名
-     *
-     * @var string
-     */
-    protected static string $indexFilename = 'indexes.php';
-
-    /**
      * 所有的 PinAdmin 应用实例
      *
      * @var Application[]
@@ -129,7 +122,7 @@ class PinAdmin
      */
     public function isInstalled(): bool
     {
-        return file_exists($this->basePath(self::$indexFilename));
+        return file_exists($this->basePath('indexes.php'));
     }
 
     /**
@@ -140,7 +133,7 @@ class PinAdmin
     public function indexes(): array
     {
         if ($this->isInstalled()) {
-            return include($this->basePath(self::$indexFilename));
+            return include($this->basePath('indexes.php'));
         }
         return [];
     }
@@ -149,13 +142,13 @@ class PinAdmin
      * 启动指定名称的 PinAdmin 应用
      *
      * @param string $name
-     * @param array $configs
+     * @param array $options
      *
      * @return $this
      */
-    public function boot(string $name, array $configs = []): self
+    public function boot(string $name, array $options = []): self
     {
-        empty($this->applications[$name]) and $this->applications[$name] = new Application($name, $configs);
+        empty($this->applications[$name]) and $this->applications[$name] = new Application($name, $options);
         $this->application = $this->applications[$name];
         return $this;
     }
