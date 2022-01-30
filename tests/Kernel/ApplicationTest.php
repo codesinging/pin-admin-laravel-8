@@ -7,6 +7,7 @@
 namespace Tests\Kernel;
 
 use CodeSinging\PinAdmin\Kernel\Application;
+use Illuminate\Config\Repository;
 use Tests\TestCase;
 
 class ApplicationTest extends TestCase
@@ -39,6 +40,18 @@ class ApplicationTest extends TestCase
         self::assertEquals('App\\PinAdmin\\Admin', (new Application('admin'))->getNamespace());
         self::assertEquals('App\\PinAdmin\\Admin\\Controllers', (new Application('admin'))->getNamespace('Controllers'));
         self::assertEquals('App\\PinAdmin\\Admin\\Controllers\\IndexController.php', (new Application('admin'))->getNamespace('Controllers', 'IndexController.php'));
+    }
+
+    public function testConfig()
+    {
+        $application = new Application('admin');
+
+        $application->config(['title' => 'Title']);
+
+        self::assertInstanceOf(Repository::class, $application->config());
+        self::assertEquals('Title', $application->config('title'));
+        self::assertEquals('Default', $application->config('name', 'Default'));
+        self::assertNull($application->config('name'));
     }
 
     public function testRoutePrefix()
