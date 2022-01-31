@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Route;
 
 Admin::boot('__DUMMY_NAME__')->guestRoutes(function () {
 
-    Route::get('/', function () {
-        dump(Admin::config()->all());
-    });
+    Route::get('/auth', [__DUMMY_NAMESPACE__\Controllers\AuthController::class, 'index']);
 
 });
 
 Admin::boot('__DUMMY_NAME__')->authRoutes(function () {
+
+    Route::get('/', [__DUMMY_NAMESPACE__\Controllers\IndexController::class, 'index']);
 
 });

@@ -150,6 +150,7 @@ class CreateCommand extends Command
             $this->application->path('routes.php'),
             [
                 '__DUMMY_NAME__' => $this->applicationName,
+                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
             ]
         );
     }
