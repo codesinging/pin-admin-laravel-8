@@ -142,7 +142,7 @@ class PinAdminServiceProvider extends ServiceProvider
         $applications = Admin::applications();
 
         foreach ($applications as $name => $application) {
-            Config::set('auth.guards.' . Admin::label($name), $application->config('auth_guard'));
+            Config::set('auth.guards.' . $application->name(), $application->config('auth_guard'));
             Config::set('auth.providers.' . $application->config('auth_guard.provider'), $application->config('auth_provider'));
         }
     }
