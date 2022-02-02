@@ -20,6 +20,12 @@ class CreateCommandTest extends TestCase
 
     public function testCreate()
     {
+        $configFile = config_path(Admin::label('php', '.'));
+        if (File::exists($configFile)){
+            File::delete($configFile);
+        }
+        self::assertFileDoesNotExist($configFile);
+
         $this->artisan('admin:create admin');
 
         Admin::load('admin')->boot('admin');
@@ -37,5 +43,7 @@ class CreateCommandTest extends TestCase
 
         Admin::config(['route_prefix' => 'admin123']);
         self::assertEquals('admin123', Admin::config('route_prefix'));
+
+        self::assertFileExists($configFile);
     }
 }

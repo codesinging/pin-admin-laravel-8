@@ -70,6 +70,7 @@ class PinAdminServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->registerCommands();
+            $this->exportConfiguration();
         }
 
         if (!$this->app->routesAreCached()) {
@@ -145,5 +146,17 @@ class PinAdminServiceProvider extends ServiceProvider
             Config::set('auth.guards.' . $application->name(), $application->config('auth_guard'));
             Config::set('auth.providers.' . $application->config('auth_guard.provider'), $application->config('auth_provider'));
         }
+    }
+
+    /**
+     * 导出配置文件
+     *
+     * @return void
+     */
+    protected function exportConfiguration()
+    {
+        $this->publishes([
+            Admin::packagePath('config/admin.php') => config_path(Admin::label('php', '.')),
+        ], Admin::label('config', '-'));
     }
 }

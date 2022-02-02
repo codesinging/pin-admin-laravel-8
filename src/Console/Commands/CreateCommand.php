@@ -11,6 +11,7 @@ use CodeSinging\PinAdmin\Console\Command;
 use CodeSinging\PinAdmin\Kernel\Admin;
 use CodeSinging\PinAdmin\Kernel\Application;
 use CodeSinging\PinAdmin\Kernel\PinAdmin;
+use CodeSinging\PinAdmin\Kernel\PinAdminServiceProvider;
 use Illuminate\Support\Str;
 
 class CreateCommand extends Command
@@ -87,6 +88,7 @@ class CreateCommand extends Command
                 $this->createConfig();
                 $this->createControllers();
                 $this->createModels();
+                $this->publishConfiguration();
                 $this->updateIndexes();
             }
         } else {
@@ -205,6 +207,24 @@ class CreateCommand extends Command
                 '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
             ]
         );
+    }
+
+    /**
+     * Publish configuration file.
+     * @return void
+     */
+    private function publishConfiguration()
+    {
+        $this->title('Publishing configuration file');
+
+        if (file_exists($file = config_path(Admin::label('php', '.')))){
+            $this->warn(sprintf('Configuration file [%s] already exists', $file));
+        } else {
+            $this->call('vendor:publish', [
+                '--provider' => PinAdminServiceProvider::class,
+                '--tag' => Admin::label('config', '-')
+            ]);
+        }
     }
 
     /**
