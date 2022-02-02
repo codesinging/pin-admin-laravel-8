@@ -70,7 +70,8 @@ class CreateCommand extends Command
         'Models',
         'Middleware',
         'Requests',
-        'Database'
+        'Database',
+        'Migrations',
     ];
 
     /**
@@ -89,6 +90,7 @@ class CreateCommand extends Command
                 $this->createConfig();
                 $this->createControllers();
                 $this->createModels();
+                $this->createMigrations();
                 $this->publishConfiguration();
                 $this->updateIndexes();
             }
@@ -207,6 +209,26 @@ class CreateCommand extends Command
             ],
             [
                 '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+            ]
+        );
+    }
+
+    /**
+     * Create default application migrations.
+     */
+    private function createMigrations(): void
+    {
+        $this->title('Create application migrations');
+        $this->copyFiles(
+            Admin::packagePath('stubs/migrations'),
+            $this->application->path('Migrations'),
+            [
+                '__DUMMY_NAME__' => $this->applicationName,
+                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
+            ],
+            [
+                '__DUMMY_NAME__' => $this->applicationName,
             ]
         );
     }
