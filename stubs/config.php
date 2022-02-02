@@ -78,7 +78,7 @@ return [
     */
     'auth_provider' => [
         'driver' => 'eloquent',
-        'model' => App\Models\__DUMMY_STUDLY_NAME__User::class,
+        'model' => __DUMMY_NAMESPACE__\Models\__DUMMY_STUDLY_NAME__User::class,
     ],
 
 ];

@@ -4,7 +4,7 @@
  * Github: https://github.com/codesinging
  */
 
-namespace App\Models;
+namespace __DUMMY_NAMESPACE__\Models;
 
 use CodeSinging\PinAdmin\Model\AuthModel;
 

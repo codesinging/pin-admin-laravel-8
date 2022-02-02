@@ -67,6 +67,7 @@ class CreateCommand extends Command
      */
     protected array $directories = [
         'Controllers',
+        'Models',
         'Middleware',
         'Requests',
         'Database'
@@ -199,9 +200,10 @@ class CreateCommand extends Command
         $this->title('Create application models');
         $this->copyFiles(
             Admin::packagePath('stubs/models'),
-            app_path('Models'),
+            $this->application->path('Models'),
             [
                 '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
             ],
             [
                 '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
