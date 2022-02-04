@@ -5,8 +5,9 @@
  */
 
 use CodeSinging\PinAdmin\Kernel\Admin;
+use CodeSinging\PinAdmin\Kernel\Application;
 use CodeSinging\PinAdmin\Kernel\PinAdmin;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -23,8 +24,37 @@ if (!function_exists('admin')) {
     {
         /** @var PinAdmin $admin */
         $admin = app(PinAdmin::LABEL);
-        is_null($name) or $admin->load($name)->boot($name);
+        is_null($name) or $admin->boot($name);
         return $admin;
+    }
+}
+
+if (!function_exists('admin_app')) {
+    /**
+     * 返回当前或指定应用的实例
+     *
+     * @param string|null $name
+     *
+     * @return Application
+     */
+    function admin_app(string $name = null): Application
+    {
+        return admin()->app($name);
+    }
+}
+
+if (!function_exists('admin_config')) {
+    /**
+     * 设置或获取 PinAdmin 应用配置值
+     *
+     * @param $key
+     * @param $default
+     *
+     * @return Application|Repository|mixed
+     */
+    function admin_config($key = null, $default = null)
+    {
+        return admin_app()->config($key, $default);
     }
 }
 
@@ -36,7 +66,7 @@ if (!function_exists('admin_view')) {
      * @param array $data
      * @param array $mergeData
      *
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     function admin_view(string $view = null, array $data = [], array $mergeData = [])
     {
