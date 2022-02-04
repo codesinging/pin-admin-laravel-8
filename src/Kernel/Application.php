@@ -6,7 +6,9 @@
 
 namespace CodeSinging\PinAdmin\Kernel;
 
+use Closure;
 use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class Application
@@ -142,6 +144,30 @@ class Application
     public function routePrefix(): string
     {
         return $this->config('route_prefix', $this->name());
+    }
+
+    /**
+     * 添加 PinAdmin 应用的路由组
+     *
+     * @param Closure $closure
+     * @param bool $auth
+     *
+     * @return $this
+     */
+    public function routeGroup(Closure $closure, bool $auth = true): Application
+    {
+        $middlewares = array_merge(
+            $this->config('middlewares'),
+            $auth ? $this->config('auth_middlewares') : $this->config('guest_middlewares')
+        );
+
+        Route::middleware($middlewares)
+            ->prefix($this->routePrefix())
+            ->group(function () use ($closure) {
+                call_user_func($closure);
+            });
+
+        return $this;
     }
 
     /**

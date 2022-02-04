@@ -176,12 +176,11 @@ class PinAdmin
      *
      * @param string $name
      *
-     * @return $this
+     * @return Application
      */
-    public function boot(string $name): PinAdmin
+    public function boot(string $name): Application
     {
-        $this->app = $this->apps[$name];
-        return $this;
+        return $this->app = $this->load($name)->apps[$name];
     }
 
     /**
@@ -204,57 +203,6 @@ class PinAdmin
     public function apps(): array
     {
         return $this->apps;
-    }
-
-    /**
-     * 设置 PinAdmin 应用组路由
-     *
-     * @param Closure $closure
-     * @param bool $auth
-     *
-     * @return void
-     */
-    protected function groupRoutes(Closure $closure, bool $auth = false)
-    {
-        $middlewares = ['web', 'admin.boot:' . $this->name()] + $this->config('middlewares', []);
-
-        if ($auth) {
-            $middlewares = array_merge($middlewares, ['admin.auth:' . $this->name()], $this->config('auth_middlewares', []));
-        } else {
-            $middlewares = array_merge($middlewares, ['admin.guest:' . $this->name()], $this->config('guest_middlewares', []));
-        }
-
-        Route::middleware($middlewares)
-            ->prefix($this->routePrefix())
-            ->group(function () use ($closure) {
-                call_user_func($closure);
-            });
-    }
-
-    /**
-     * 设置需要认证授权的 PinAdmin 应用组路由
-     *
-     * @param Closure $closure
-     *
-     * @return $this
-     */
-    public function authRoutes(Closure $closure): PinAdmin
-    {
-        $this->groupRoutes($closure, true);
-        return $this;
-    }
-
-    /**
-     * 设置不需要认证授权的 PinAdmin 应用组路由
-     *
-     * @param Closure $closure
-     *
-     * @return $this
-     */
-    public function guestRoutes(Closure $closure): PinAdmin
-    {
-        $this->groupRoutes($closure, false);
-        return $this;
     }
 
     /**
