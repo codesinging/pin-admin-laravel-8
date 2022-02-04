@@ -61,33 +61,37 @@ class PinAdminTest extends TestCase
     {
         $admin = new PinAdmin();
 
-        self::assertEmpty($admin->applications());
+        self::assertEmpty($admin->apps());
 
         $admin->load('admin')->boot('admin');
-        self::assertCount(1, $admin->applications());
-        self::assertArrayHasKey('admin', $admin->applications());
+        self::assertCount(1, $admin->apps());
+        self::assertArrayHasKey('admin', $admin->apps());
     }
 
-    public function testApplication()
+    public function testApp()
     {
         $admin = new PinAdmin();
+        $admin->load('shop');
         $admin->load('admin')->boot('admin');
-        self::assertInstanceOf(Application::class, $admin->application('admin'));
+        self::assertInstanceOf(Application::class, $admin->app());
+        self::assertEquals('admin', $admin->app()->name());
+        self::assertInstanceOf(Application::class, $admin->app('shop'));
+        self::assertEquals('shop', $admin->app('shop')->name());
     }
 
     public function testApplications()
     {
         $admin = new PinAdmin();
 
-        self::assertEmpty($admin->applications());
+        self::assertEmpty($admin->apps());
 
         $admin->load('admin')->boot('admin');
-        self::assertCount(1, $admin->applications());
-        self::assertArrayHasKey('admin', $admin->applications());
+        self::assertCount(1, $admin->apps());
+        self::assertArrayHasKey('admin', $admin->apps());
 
         $admin->load('user')->boot('user');
-        self::assertCount(2, $admin->applications());
-        self::assertArrayHasKey('user', $admin->applications());
+        self::assertCount(2, $admin->apps());
+        self::assertArrayHasKey('user', $admin->apps());
     }
 
     public function testCall()

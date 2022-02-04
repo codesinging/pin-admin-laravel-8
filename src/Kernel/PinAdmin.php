@@ -50,14 +50,14 @@ class PinAdmin
      *
      * @var Application[]
      */
-    protected array $applications = [];
+    protected array $apps = [];
 
     /**
      * 当前路由所在的 PinAdmin 应用
      *
      * @var Application
      */
-    protected Application $application;
+    protected Application $app;
 
     /**
      * 构造函数
@@ -165,8 +165,8 @@ class PinAdmin
      */
     public function load(string $name, array $options = []): PinAdmin
     {
-        if (empty($this->applications[$name])) {
-            $this->applications[$name] = new Application($name, $options);
+        if (empty($this->apps[$name])) {
+            $this->apps[$name] = new Application($name, $options);
         }
         return $this;
     }
@@ -180,18 +180,20 @@ class PinAdmin
      */
     public function boot(string $name): PinAdmin
     {
-        $this->application = $this->applications[$name];
+        $this->app = $this->apps[$name];
         return $this;
     }
 
     /**
-     * 返回当前 PinAdmin 应用
+     * 返回指定或者当前 PinAdmin 应用
+     *
+     * @param string|null $name
      *
      * @return Application
      */
-    public function application(): Application
+    public function app(string $name = null): Application
     {
-        return $this->application;
+        return is_null($name) ? $this->app : $this->apps[$name];
     }
 
     /**
@@ -199,13 +201,14 @@ class PinAdmin
      *
      * @return Application[]
      */
-    public function applications(): array
+    public function apps(): array
     {
-        return $this->applications;
+        return $this->apps;
     }
 
     /**
      * 设置 PinAdmin 应用组路由
+     *
      * @param Closure $closure
      * @param bool $auth
      *
@@ -264,6 +267,6 @@ class PinAdmin
      */
     public function __call($name, $arguments)
     {
-        return $this->application->$name(...$arguments);
+        return $this->app->$name(...$arguments);
     }
 }

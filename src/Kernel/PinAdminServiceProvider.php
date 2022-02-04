@@ -108,7 +108,7 @@ class PinAdminServiceProvider extends ServiceProvider
      */
     protected function loadRoutes()
     {
-        $applications = Admin::applications();
+        $applications = Admin::apps();
         foreach ($applications as $application) {
             $this->loadRoutesFrom($application->path('routes.php'));
         }
@@ -140,7 +140,7 @@ class PinAdminServiceProvider extends ServiceProvider
      */
     protected function configureAuthentication()
     {
-        $applications = Admin::applications();
+        $applications = Admin::apps();
 
         foreach ($applications as $name => $application) {
             Config::set('auth.guards.' . $application->name(), $application->config('auth_guard'));
