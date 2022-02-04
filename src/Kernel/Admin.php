@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static boolean isInstalled()
  * @method static array indexes()
  * @method static PinAdmin load(string $name = null, array $options = [])
- * @method static Application boot(string $name)
+ * @method static PinAdmin boot(string $name)
  * @method static Application app(string $name = null)
  * @method static Application[] apps()
  * @method static Application routeGroup(Closure $closure, bool $auth = true)

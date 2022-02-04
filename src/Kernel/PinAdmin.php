@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
  * @method string getNamespace(...$paths)
  * @method array|mixed config(string $key = null, $default = null)
  * @method string routePrefix()
+ * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])
  */
 class PinAdmin
@@ -176,11 +177,12 @@ class PinAdmin
      *
      * @param string $name
      *
-     * @return Application
+     * @return $this
      */
-    public function boot(string $name): Application
+    public function boot(string $name): PinAdmin
     {
-        return $this->app = $this->load($name)->apps[$name];
+        $this->app = $this->load($name)->apps[$name];
+        return $this;
     }
 
     /**
