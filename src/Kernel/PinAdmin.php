@@ -25,6 +25,8 @@ use Illuminate\Contracts\View\View;
  * @method string routePrefix()
  * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])
+ * @method string asset(string $path = '')
+ * @method string mix(string $path)
  */
 class PinAdmin
 {

@@ -7,6 +7,7 @@
 namespace CodeSinging\PinAdmin\Kernel;
 
 use Closure;
+use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -237,5 +238,34 @@ class Application
         $parameters and $link .= '?' . http_build_query($parameters);
 
         return $link;
+    }
+
+    /**
+     * 返回当前应用的静态文件路径
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function asset(string $path = ''): string
+    {
+        if (Str::startsWith($path, ['https://', 'http://', '//', '/'])) {
+            return $path;
+        }
+
+        return '/static/' . Str::kebab($this->directory($path));
+    }
+
+    /**
+     * 返回带版本号的静态资源文件路径
+     *
+     * @param string $path
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function mix(string $path): string
+    {
+        return mix($path, rtrim($this->asset(), '/'));
     }
 }
