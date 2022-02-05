@@ -2,7 +2,7 @@
 
 @section('title', '管理员登录')
 
-@section('content')
+@section('body')
     <div id="app">
         <el-card header="管理员登录"></el-card>
     </div>
