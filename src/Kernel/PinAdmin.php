@@ -7,6 +7,8 @@
 namespace CodeSinging\PinAdmin\Kernel;
 
 use Closure;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -208,7 +210,8 @@ class PinAdmin
     }
 
     /**
-     * 获取 PinAdmin 视图模板文件名
+     * 返回 PinAdmin 视图模板文件名
+     *
      * @param string $path
      *
      * @return string
@@ -216,6 +219,21 @@ class PinAdmin
     public function template(string $path): string
     {
         return $this->label($path, '::');
+    }
+
+    /**
+     * 返回 PinAdmin 视图内容
+     *
+     * @param string|null $view
+     * @param array $data
+     * @param array $mergeData
+     *
+     * @return Factory|View
+     */
+    public function view(string $view = null, array $data = [], array $mergeData = [])
+    {
+        empty($view) or $view = $this->template($view);
+        return view($view, $data, $mergeData);
     }
 
     /**
