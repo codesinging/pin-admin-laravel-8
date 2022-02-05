@@ -8,6 +8,10 @@ namespace CodeSinging\PinAdmin\Kernel;
 
 use Closure;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -152,6 +156,36 @@ class Application
             return $this;
         }
         return $this->config->get($key, $default);
+    }
+
+    /**
+     * 返回授权认证的实例
+     *
+     * @return Guard|StatefulGuard
+     */
+    public function auth()
+    {
+        return Auth::guard($this->guard());
+    }
+
+    /**
+     * 返回认证用户
+     *
+     * @return Authenticatable|null
+     */
+    public function user(): ?Authenticatable
+    {
+        return $this->auth()->user();
+    }
+
+    /**
+     * 返回认证用户ID
+     *
+     * @return int|string|null
+     */
+    public function userId()
+    {
+        return $this->auth()->id();
     }
 
     /**
