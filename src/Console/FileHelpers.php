@@ -12,6 +12,7 @@ trait FileHelpers
 {
     /**
      * 创建目录
+     *
      * @param string $path
      */
     protected function makeDirectory(string $path)
@@ -29,6 +30,7 @@ trait FileHelpers
 
     /**
      * 复制文件
+     *
      * @param string $srcFilename
      * @param string $destFilename
      * @param array $replaces
@@ -58,6 +60,7 @@ trait FileHelpers
 
     /**
      * 复制一个目录下面的所有文件
+     *
      * @param string $srcDirectory
      * @param string $destDirectory
      * @param array $replaces
@@ -69,7 +72,7 @@ trait FileHelpers
             $files = File::files($srcDirectory);
             foreach ($files as $file) {
                 $filename = $file->getFilename();
-                if ($filenameReplaces){
+                if ($filenameReplaces) {
                     foreach ($filenameReplaces as $search => $replace) {
                         $filename = str_replace($search, $replace, $filename);
                     }
@@ -82,7 +85,25 @@ trait FileHelpers
     }
 
     /**
+     * 复制文件目录及其下所有文件
+     *
+     * @param string $srcDirectory
+     * @param string $destDirectory
+     *
+     * @return void
+     */
+    protected function copyDirectory(string $srcDirectory, string $destDirectory)
+    {
+        if (File::copyDirectory($srcDirectory, $destDirectory)) {
+            $this->info(sprintf('Copied directory [%s]', $destDirectory));
+        } else {
+            $this->error(sprintf('Failed to copy directory [%s]', $destDirectory));
+        }
+    }
+
+    /**
      * 删除目录
+     *
      * @param string $path
      */
     protected function deleteDirectory(string $path)
@@ -96,6 +117,7 @@ trait FileHelpers
 
     /**
      * 删除文件
+     *
      * @param string $path
      */
     protected function deleteFile(string $path)
