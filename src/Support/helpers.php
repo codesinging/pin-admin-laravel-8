@@ -112,6 +112,35 @@ if (!function_exists('admin_view')) {
     }
 }
 
+if (!function_exists('admin_asset')) {
+    /**
+     * 返回 PinAdmin 应用静态文件路径
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    function admin_asset(string $path = ''): string
+    {
+        return admin_app()->asset($path);
+    }
+}
+
+if (!function_exists('admin_mix')) {
+    /**
+     * 返回带版本号的静态资源文件路径
+     *
+     * @param string $path
+     *
+     * @return string
+     * @throws Exception
+     */
+    function admin_mix(string $path): string
+    {
+        return admin_app()->mix($path);
+    }
+}
+
 if (!function_exists('admin_template')) {
     /**
      * 获取 PinAdmin 视图模板文件名
