@@ -253,7 +253,7 @@ class Application
             return $path;
         }
 
-        return '/static/' . Str::kebab($this->directory($path));
+        return '/static/' . Str::kebab(implode('/', [self::BASE_DIRECTORY, $this->name(), $path]));
     }
 
     /**
