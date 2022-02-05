@@ -72,7 +72,7 @@ return [
     */
     'auth_guard' => [
         'driver' => 'session',
-        'provider' => '__DUMMY_NAME___users',
+        'provider' => '__DUMMY_GUARD___users',
     ],
 
     /*

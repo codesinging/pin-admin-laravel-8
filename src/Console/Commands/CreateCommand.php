@@ -23,7 +23,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = PinAdmin::LABEL . ':create {name} {--D|directory=}';
+    protected $signature = PinAdmin::LABEL . ':create {name} {--D|directory=} {--G|guard=}';
 
     /**
      * The console command description.
@@ -38,6 +38,13 @@ class CreateCommand extends Command
      * @var string
      */
     protected string $applicationName;
+
+    /**
+     * The application guard.
+     *
+     * @var string
+     */
+    protected string $applicationGuard;
 
     /**
      * The application directory.
@@ -105,6 +112,7 @@ class CreateCommand extends Command
     private function init(): void
     {
         $this->indexes = Admin::indexes();
+        $this->applicationGuard = $this->option('guard')?: $this->applicationName;
         $this->applicationDirectory = $this->option('directory') ?: Str::studly($this->applicationName);
         $this->application = new Application($this->applicationName, ['directory' => $this->applicationDirectory]);
     }
@@ -116,7 +124,7 @@ class CreateCommand extends Command
      */
     private function verify(): bool
     {
-        $this->applicationName = $this->argument('name');
+        $this->applicationName = Str::snake($this->argument('name'));
         return !empty($this->applicationName) && preg_match('/^[a-zA-Z]+\w*$/', $this->applicationName) === 1;
     }
 
@@ -153,10 +161,7 @@ class CreateCommand extends Command
         $this->copyFile(
             Admin::packagePath('stubs', 'routes.php'),
             $this->application->path('routes.php'),
-            [
-                '__DUMMY_NAME__' => $this->applicationName,
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
-            ]
+            $this->replaces()
         );
     }
 
@@ -169,13 +174,7 @@ class CreateCommand extends Command
         $this->copyFile(
             Admin::packagePath('stubs', 'config.php'),
             $this->application->path('config.php'),
-            [
-                '__DUMMY_UPPER_LABEL__' => Str::upper(Admin::label()),
-                '__DUMMY_UPPER_NAME__' => Str::upper($this->applicationName),
-                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
-                '__DUMMY_NAME__' => $this->applicationName,
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
-            ]
+            $this->replaces()
         );
     }
 
@@ -188,9 +187,7 @@ class CreateCommand extends Command
         $this->copyFiles(
             Admin::packagePath('stubs/controllers'),
             $this->application->path('Controllers'),
-            [
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
-            ]
+            $this->replaces()
         );
     }
 
@@ -203,13 +200,8 @@ class CreateCommand extends Command
         $this->copyFiles(
             Admin::packagePath('stubs/models'),
             $this->application->path('Models'),
-            [
-                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
-            ],
-            [
-                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
-            ]
+            $this->replaces(),
+            $this->replaces()
         );
     }
 
@@ -222,14 +214,8 @@ class CreateCommand extends Command
         $this->copyFiles(
             Admin::packagePath('stubs/migrations'),
             database_path('migrations'),
-            [
-                '__DUMMY_NAME__' => $this->applicationName,
-                '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
-                '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
-            ],
-            [
-                '__DUMMY_NAME__' => $this->applicationName,
-            ]
+            $this->replaces(),
+            $this->replaces()
         );
     }
 
@@ -259,6 +245,7 @@ class CreateCommand extends Command
         $this->title('Update application indexes');
         $this->indexes[$this->applicationName] = [
             'name' => $this->applicationName,
+            'guard' => $this->applicationGuard,
             'directory' => $this->applicationDirectory,
             'status' => true,
         ];
@@ -267,5 +254,22 @@ class CreateCommand extends Command
             Admin::basePath('indexes.php'),
             ['__DUMMY_INDEXES__' => $this->varExport($this->indexes, true)]
         );
+    }
+
+    /**
+     * 所有需要替换的标记
+     * @return array
+     */
+    private function replaces(): array
+    {
+        return [
+            '__DUMMY_UPPER_LABEL__' => Str::upper(Admin::label()),
+            '__DUMMY_UPPER_NAME__' => Str::upper($this->applicationName),
+            '__DUMMY_NAME__' => $this->applicationName,
+            '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
+            '__DUMMY_CAMEL_NAME__' => Str::camel($this->applicationName),
+            '__DUMMY_GUARD__' => $this->applicationGuard,
+            '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
+        ];
     }
 }

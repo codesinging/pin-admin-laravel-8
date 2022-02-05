@@ -46,10 +46,11 @@ class ApplicationsCommand extends Command
             $data[] = [
                 count($data) + 1,
                 $options['name'],
+                $options['guard'],
                 $options['directory'],
                 $options['status'] ? 'true' : 'false'
             ];
         }
-        $this->table(['Index', 'Name', 'Directory', 'Status'], $data);
+        $this->table(['Index', 'Name', 'Guard', 'Directory', 'Status'], $data);
     }
 }

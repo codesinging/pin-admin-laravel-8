@@ -26,6 +26,13 @@ class Application
     protected string $name;
 
     /**
+     * 应用守卫
+     *
+     * @var string
+     */
+    protected string $guard;
+
+    /**
      * @var string 应用目录
      */
     protected string $directory;
@@ -52,6 +59,7 @@ class Application
     {
         $this->name = $name;
         $this->options = $options;
+        $this->guard = $this->options['guard'] ?? $this->name;
         $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . ($this->options['directory'] ?? Str::studly($name));
         $this->initConfig();
     }
@@ -64,6 +72,16 @@ class Application
     public function name(): string
     {
         return $this->name;
+    }
+
+    /**
+     * 返回应用守卫
+     *
+     * @return string
+     */
+    public function guard(): string
+    {
+        return $this->guard;
     }
 
     /**
