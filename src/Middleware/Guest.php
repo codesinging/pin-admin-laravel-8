@@ -12,6 +12,6 @@ class Guest
 {
     public function handle(Request $request, \Closure $next, string $name)
     {
-        return $next($name);
+        return $next($request);
     }
 }
