@@ -71,7 +71,7 @@ if (!function_exists('admin_view')) {
     function admin_view(string $view = null, array $data = [], array $mergeData = [])
     {
         if ($view) {
-            $view = Admin::name() . '.' . $view;
+            $view = Admin::name() . '::' . $view;
         }
         return view($view, $data, $mergeData);
     }

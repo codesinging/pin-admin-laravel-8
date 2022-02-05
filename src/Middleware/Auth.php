@@ -6,7 +6,6 @@
 
 namespace CodeSinging\PinAdmin\Middleware;
 
-use Closure;
 use CodeSinging\PinAdmin\Kernel\Admin;
 use Exception;
 use Illuminate\Auth\Middleware\Authenticate;

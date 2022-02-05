@@ -77,6 +77,8 @@ class PinAdminServiceProvider extends ServiceProvider
             $this->loadRoutes();
         }
 
+        $this->loadViews();
+
         $this->registerMiddlewares();
         $this->configureAuthentication();
     }
@@ -112,6 +114,16 @@ class PinAdminServiceProvider extends ServiceProvider
         foreach ($applications as $application) {
             $this->loadRoutesFrom($application->path('routes.php'));
         }
+    }
+
+    /**
+     * 加载应用视图
+     *
+     * @return void
+     */
+    protected function loadViews()
+    {
+        $this->loadViewsFrom(Admin::packagePath('resources', 'views'), Admin::label());
     }
 
     /**
