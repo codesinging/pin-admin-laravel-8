@@ -4,7 +4,6 @@
  * Github: https://github.com/codesinging
  */
 
-use CodeSinging\PinAdmin\Kernel\Admin;
 use CodeSinging\PinAdmin\Kernel\Application;
 use CodeSinging\PinAdmin\Kernel\PinAdmin;
 use Illuminate\Config\Repository;
