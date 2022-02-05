@@ -208,6 +208,17 @@ class PinAdmin
     }
 
     /**
+     * 获取 PinAdmin 视图模板文件名
+     * @param string $path
+     *
+     * @return string
+     */
+    public function template(string $path): string
+    {
+        return $this->label($path, '::');
+    }
+
+    /**
      * 调用 PinAdmin 应用的方法
      *
      * @param $name

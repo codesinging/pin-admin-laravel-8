@@ -77,6 +77,20 @@ if (!function_exists('admin_view')) {
     }
 }
 
+if (!function_exists('admin_template')) {
+    /**
+     * 获取 PinAdmin 视图模板文件名
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    function admin_template(string $path): string
+    {
+        return admin()->template($path);
+    }
+}
+
 if (!function_exists('success')) {
     /**
      * 返回正确的 json 响应信息
