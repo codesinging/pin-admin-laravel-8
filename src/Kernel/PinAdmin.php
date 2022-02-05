@@ -7,6 +7,9 @@
 namespace CodeSinging\PinAdmin\Kernel;
 
 use Closure;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
@@ -16,6 +19,9 @@ use Illuminate\Contracts\View\View;
  * @method string path(...$paths)
  * @method string getNamespace(...$paths)
  * @method array|mixed config(string $key = null, $default = null)
+ * @method Guard|StatefulGuard auth()
+ * @method Authenticatable|null user()
+ * @method int|string|null userId()
  * @method string routePrefix()
  * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])

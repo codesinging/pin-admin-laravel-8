@@ -8,6 +8,9 @@ namespace CodeSinging\PinAdmin\Kernel;
 
 use Closure;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -27,6 +30,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static string path(...$paths)
  * @method static string getNamespace(...$paths)
  * @method static mixed|Repository|Application config($key = null, $default = null)
+ * @method static Guard|StatefulGuard auth()
+ * @method static Authenticatable|null user()
+ * @method static int|string|null userId()
  * @method static string routePrefix()
  * @method static string link(string $path = '', array $parameters = [])
  */
