@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 
 /**
  * @method string name()
@@ -142,6 +143,31 @@ class PinAdmin
     public function basePath(...$paths): string
     {
         return app_path($this->baseDirectory(...$paths));
+    }
+
+    /**
+     * 返回应用的静态文件基础目录，相对于 `public_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function baseAssetDirectory(...$paths): string
+    {
+        array_unshift($paths, 'static', Str::kebab(self::BASE_DIRECTORY));
+        return implode('/', $paths);
+    }
+
+    /**
+     * 返回应用的静态文件基础路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function baseAssetPath(...$paths): string
+    {
+        return public_path($this->baseAssetDirectory(...$paths));
     }
 
     /**

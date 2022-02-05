@@ -47,6 +47,15 @@ class PinAdminTest extends TestCase
         self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $admin->basePath('Admin', 'Controllers'));
     }
 
+    public function testBaseAssetDirectory()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals('static/pin-admin', $admin->baseAssetDirectory());
+        self::assertEquals('static/pin-admin/admin', $admin->baseAssetDirectory('admin'));
+        self::assertEquals('static/pin-admin/admin/images', $admin->baseAssetDirectory('admin', 'images'));
+    }
+
     public function testIsInstalled()
     {
         self::assertIsBool((new PinAdmin())->isInstalled());

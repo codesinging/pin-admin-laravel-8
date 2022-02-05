@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string packagePath(...$paths)
  * @method static string baseDirectory(...$paths)
  * @method static string basePath(...$paths)
+ * @method static string baseAssetDirectory(...$paths)
+ * @method static string baseAssetPath(...$paths)
  * @method static boolean isInstalled()
  * @method static array indexes()
  * @method static PinAdmin load(string $name = null, array $options = [])
