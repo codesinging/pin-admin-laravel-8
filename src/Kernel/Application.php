@@ -254,6 +254,18 @@ class Application
     }
 
     /**
+     * 返回应用的静态文件路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function assetPath(...$paths): string
+    {
+        return public_path($this->assetDirectory(...$paths));
+    }
+
+    /**
      * 返回当前应用的静态文件路径
      *
      * @param string $path

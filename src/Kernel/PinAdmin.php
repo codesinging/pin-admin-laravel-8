@@ -26,6 +26,7 @@ use Illuminate\Contracts\View\View;
  * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])
  * @method string assetDirectory(...$paths)
+ * @method string assetPath(...$paths)
  * @method string asset(string $path = '')
  * @method string mix(string $path)
  */
