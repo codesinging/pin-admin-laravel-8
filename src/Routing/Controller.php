@@ -6,7 +6,6 @@
 
 namespace CodeSinging\PinAdmin\Routing;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -25,7 +24,7 @@ class Controller extends \Illuminate\Routing\Controller
      * @param array $data
      * @param array $mergeData
      *
-     * @return Application|Factory|View
+     * @return Factory|View
      */
     protected function view(string $view = null, array $data = [], array $mergeData = [])
     {
