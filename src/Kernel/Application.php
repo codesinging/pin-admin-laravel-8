@@ -247,6 +247,31 @@ class Application
      *
      * @return string
      */
+    public function resourceDirectory(...$paths): string
+    {
+        array_unshift($paths, Str::kebab(self::BASE_DIRECTORY), $this->name());
+        return implode('/', $paths);
+    }
+
+    /**
+     * 返回应用的静态文件路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function resourcePath(...$paths): string
+    {
+        return resource_path($this->resourceDirectory(...$paths));
+    }
+
+    /**
+     * 返回应用的静态文件目录，相对于 `public_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
     public function assetDirectory(...$paths): string
     {
         array_unshift($paths, 'static', Str::kebab(self::BASE_DIRECTORY), $this->name());

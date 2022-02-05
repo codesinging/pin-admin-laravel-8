@@ -66,6 +66,14 @@ class ApplicationTest extends TestCase
         self::assertEquals('/admin/home?id=1', (new Application('admin'))->link('home', ['id' => 1]));
     }
 
+    public function testResourceDirectory()
+    {
+        $app = new Application('admin');
+
+        self::assertEquals('pin-admin/admin', $app->resourceDirectory());
+        self::assertEquals('pin-admin/admin/js', $app->resourceDirectory('js'));
+    }
+
     public function testAssetDirectory()
     {
         $app = new Application('admin');

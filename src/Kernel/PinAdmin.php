@@ -26,6 +26,8 @@ use Illuminate\Support\Str;
  * @method string routePrefix()
  * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])
+ * @method string resourceDirectory(...$paths)
+ * @method string resourcePath(...$paths)
  * @method string assetDirectory(...$paths)
  * @method string assetPath(...$paths)
  * @method string asset(string $path = '')
@@ -168,6 +170,31 @@ class PinAdmin
     public function baseAssetPath(...$paths): string
     {
         return public_path($this->baseAssetDirectory(...$paths));
+    }
+
+    /**
+     * 返回应用的静态文件基础目录，相对于 `public_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function baseResourceDirectory(...$paths): string
+    {
+        array_unshift($paths, Str::kebab(self::BASE_DIRECTORY));
+        return implode('/', $paths);
+    }
+
+    /**
+     * 返回应用的静态文件基础路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function baseResourcePath(...$paths): string
+    {
+        return resource_path($this->baseResourceDirectory(...$paths));
     }
 
     /**

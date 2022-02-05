@@ -56,6 +56,15 @@ class PinAdminTest extends TestCase
         self::assertEquals('static/pin-admin/admin/images', $admin->baseAssetDirectory('admin', 'images'));
     }
 
+    public function testBaseResourceDirectory()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals('pin-admin', $admin->baseResourceDirectory());
+        self::assertEquals('pin-admin/admin', $admin->baseResourceDirectory('admin'));
+        self::assertEquals('pin-admin/admin/js', $admin->baseResourceDirectory('admin', 'js'));
+    }
+
     public function testIsInstalled()
     {
         self::assertIsBool((new PinAdmin())->isInstalled());
