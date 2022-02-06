@@ -9,9 +9,12 @@ namespace CodeSinging\PinAdmin\Routing;
 use CodeSinging\PinAdmin\Kernel\Admin;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 
 class Controller extends \Illuminate\Routing\Controller
 {
@@ -45,8 +48,30 @@ class Controller extends \Illuminate\Routing\Controller
         return Admin::page($page, $data);
     }
 
-    protected function success($message = null, $data = null)
+    /**
+     * 返回正确的 json 响应信息
+     *
+     * @param string|array|Collection|Model $message
+     * @param $data
+     *
+     * @return JsonResponse
+     */
+    protected function success($message = null, $data = null): JsonResponse
     {
-        return
+        return Admin::success($message, $data);
+    }
+
+    /**
+     * 返回错误的 json 响应信息
+     *
+     * @param string|null $message
+     * @param int $code
+     * @param null $data
+     *
+     * @return JsonResponse
+     */
+    protected function error(string $message = null, int $code = -1, $data = null): JsonResponse
+    {
+        return Admin::error($message, $code, $data);
     }
 }
