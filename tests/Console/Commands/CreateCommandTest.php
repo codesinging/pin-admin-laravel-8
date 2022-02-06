@@ -16,6 +16,7 @@ class CreateCommandTest extends TestCase
     protected function tearDown(): void
     {
         File::deleteDirectory(Admin::basePath());
+        File::deleteDirectory(Admin::baseAssetDirectory());
     }
 
     public function testCreate()
@@ -45,5 +46,7 @@ class CreateCommandTest extends TestCase
         self::assertEquals('admin123', Admin::config('route_prefix'));
 
         self::assertFileExists($configFile);
+
+        self::assertFileExists(Admin::assetPath('images/logo.svg'));
     }
 }

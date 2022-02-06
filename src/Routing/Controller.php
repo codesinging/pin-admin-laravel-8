@@ -6,19 +6,19 @@
 
 namespace CodeSinging\PinAdmin\Routing;
 
+use CodeSinging\PinAdmin\Kernel\Admin;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\JsonResponse;
 
 class Controller extends \Illuminate\Routing\Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * 返回视图内容
+     * 解析 views 目录中当前应用目录下的模板，并返回渲染后的内容
      *
      * @param string|null $view
      * @param array $data
@@ -28,33 +28,25 @@ class Controller extends \Illuminate\Routing\Controller
      */
     protected function view(string $view = null, array $data = [], array $mergeData = [])
     {
-        return admin_view($view, $data, $mergeData);
+        is_null($view) or $view = Admin::name() . '.' . $view;
+        return view($view, $data, $mergeData);
     }
 
     /**
-     * 返回正确的 json 响应信息
+     * 解析当前应用的单文件组件，并返回渲染后的内容
      *
-     * @param $message
-     * @param $data
+     * @param string $page
+     * @param array $data
      *
-     * @return JsonResponse
+     * @return Factory|View
      */
-    protected function success($message = null, $data = null): JsonResponse
+    protected function page(string $page, array $data = [])
     {
-        return success($message, $data);
+        return Admin::page($page, $data);
     }
 
-    /**
-     * 返回错误的 json 响应信息
-     *
-     * @param $message
-     * @param int $code
-     * @param $data
-     *
-     * @return JsonResponse
-     */
-    protected function error($message = null, int $code = -1, $data = null): JsonResponse
+    protected function success($message = null, $data = null)
     {
-        return error($message, $code, $data);
+        return
     }
 }

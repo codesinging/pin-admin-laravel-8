@@ -8,6 +8,7 @@ namespace CodeSinging\PinAdmin\Console\Commands;
 
 use CodeSinging\PinAdmin\Console\ArrayHelpers;
 use CodeSinging\PinAdmin\Console\Command;
+use CodeSinging\PinAdmin\Console\PackageHelpers;
 use CodeSinging\PinAdmin\Kernel\Admin;
 use CodeSinging\PinAdmin\Kernel\Application;
 use CodeSinging\PinAdmin\Kernel\PinAdmin;
@@ -17,6 +18,7 @@ use Illuminate\Support\Str;
 class CreateCommand extends Command
 {
     use ArrayHelpers;
+    use PackageHelpers;
 
     /**
      * The name and signature of the console command.
@@ -99,6 +101,7 @@ class CreateCommand extends Command
                 $this->createModels();
                 $this->createMigrations();
                 $this->publishConfiguration();
+                $this->publishResources();
                 $this->updateIndexes();
             }
         } else {
@@ -112,7 +115,7 @@ class CreateCommand extends Command
     private function init(): void
     {
         $this->indexes = Admin::indexes();
-        $this->applicationGuard = $this->option('guard')?: $this->applicationName;
+        $this->applicationGuard = $this->option('guard') ?: $this->applicationName;
         $this->applicationDirectory = $this->option('directory') ?: Str::studly($this->applicationName);
         $this->application = new Application($this->applicationName, ['directory' => $this->applicationDirectory]);
     }
@@ -221,13 +224,14 @@ class CreateCommand extends Command
 
     /**
      * Publish configuration file.
+     *
      * @return void
      */
     private function publishConfiguration()
     {
         $this->title('Publishing configuration file');
 
-        if (file_exists($file = config_path(Admin::label('php', '.')))){
+        if (file_exists($file = config_path(Admin::label('php', '.')))) {
             $this->warn(sprintf('Configuration file [%s] already exists', $file));
         } else {
             $this->call('vendor:publish', [
@@ -235,6 +239,43 @@ class CreateCommand extends Command
                 '--tag' => Admin::label('config', '-')
             ]);
         }
+    }
+
+    /**
+     * Publish application images.
+     *
+     * @return void
+     */
+    private function publishResources()
+    {
+        $this->title('Publishing application static resources');
+
+        $this->copyFile(
+            Admin::packagePath('stubs/config.js'),
+            $this->application->resourcePath('config.js'),
+            [
+                '__DUMMY_DIST_PATH__' => 'public/' . $this->application->assetDirectory(),
+                '__DUMMY_SRC_PATH__' => 'resources/' . $this->application->resourceDirectory(),
+            ]
+        );
+
+        $this->copyDirectory(Admin::packagePath('resources/images'), $this->application->assetPath('images'));
+
+        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->application->resourcePath());
+
+        $this->addPackageScripts([
+            Admin::label('dev', '-') . ':' . $this->application->name() => sprintf('mix --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
+            Admin::label('watch', '-') . ':' . $this->application->name() => sprintf('mix watch --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
+            Admin::label('prod', '-') . ':' . $this->application->name() => sprintf('mix --production --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
+        ]);
+
+        $this->addDependencies([
+            'vue' => '^3.2.29',
+        ]);
+
+        $this->addDevDependencies([
+            'vue-loader' => '^16.2.0'
+        ]);
     }
 
     /**
@@ -258,6 +299,7 @@ class CreateCommand extends Command
 
     /**
      * 所有需要替换的标记
+     *
      * @return array
      */
     private function replaces(): array

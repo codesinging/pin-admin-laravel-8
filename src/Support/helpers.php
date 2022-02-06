@@ -112,6 +112,21 @@ if (!function_exists('admin_view')) {
     }
 }
 
+if (!function_exists('page')) {
+    /**
+     * 返回 PinAdmin 的 Vue 组件形式的视图内容
+     *
+     * @param string|null $view
+     * @param array $data
+     *
+     * @return Factory|View
+     */
+    function page(string $view = null, array $data = [])
+    {
+        return admin()->page($view, $data);
+    }
+}
+
 if (!function_exists('admin_asset')) {
     /**
      * 返回 PinAdmin 应用静态文件路径
@@ -166,9 +181,7 @@ if (!function_exists('success')) {
      */
     function success($message = null, $data = null): JsonResponse
     {
-        $code = 0;
-        is_string($message) or list($data, $message) = [$message, $data];
-        return response()->json(compact('code', 'message', 'data'));
+        return admin()->success($message, $data);
     }
 }
 
@@ -184,6 +197,6 @@ if (!function_exists('error')) {
      */
     function error($message = null, int $code = -1, $data = null): JsonResponse
     {
-        return response()->json(compact('message', 'code', 'data'));
+        return admin()->error($message, $code, $data);
     }
 }

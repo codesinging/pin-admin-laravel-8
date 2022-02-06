@@ -12,6 +12,6 @@ class IndexController extends Controller
 {
     public function index(): string
     {
-        return $this->view('index.index');
+        return page('index.index');
     }
 }

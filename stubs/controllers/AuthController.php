@@ -12,6 +12,6 @@ class AuthController extends Controller
 {
     public function index(): string
     {
-        return $this->view('auth.index');
+        return page('auth/index');
     }
 }

@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "laravel/framework": "^8.81"
+        "laravel/framework": "^8.81",
+        "ext-json": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^6.24"
