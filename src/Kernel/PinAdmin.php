@@ -307,7 +307,7 @@ class PinAdmin
      */
     public function page(string $page, array $data = [])
     {
-        return $this->view('public/page', compact('page', $data));
+        return $this->view('public/page', compact('page', 'data'));
     }
 
     /**
