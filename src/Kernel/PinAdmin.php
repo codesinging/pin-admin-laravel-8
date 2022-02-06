@@ -12,6 +12,9 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
 /**
@@ -300,6 +303,7 @@ class PinAdmin
 
     /**
      * 返回 PinAdmin 的 Vue 组件形式的视图内容
+     *
      * @param string $page
      * @param array $data
      *
@@ -308,6 +312,35 @@ class PinAdmin
     public function page(string $page, array $data = [])
     {
         return $this->view('public/page', compact('page', 'data'));
+    }
+
+    /**
+     * 返回正确的 json 响应信息
+     *
+     * @param string|array|Collection|Model $message
+     * @param $data
+     *
+     * @return JsonResponse
+     */
+    public function success($message = null, $data = null): JsonResponse
+    {
+        $code = 0;
+        is_string($message) or list($data, $message) = [$message, $data];
+        return response()->json(compact('code', 'message', 'data'));
+    }
+
+    /**
+     * 返回错误的 json 响应信息
+     *
+     * @param string|null $message
+     * @param int $code
+     * @param null $data
+     *
+     * @return JsonResponse
+     */
+    public function error(string $message = null, int $code = -1, $data = null): JsonResponse
+    {
+        return response()->json(compact('message', 'code', 'data'));
     }
 
     /**

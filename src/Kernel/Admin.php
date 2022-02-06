@@ -13,6 +13,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -33,6 +34,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string template(string $path)
  * @method static Factory|View view(string $view = null, array $data = [], array $mergeData = [])
  * @method static Factory|View page(string $view = null, array $data = [])
+ * @method static JsonResponse success($message = null, $data = null)
+ * @method static JsonResponse error(string $message = null, int $code = -1, $data = null)
  * @method static Application routeGroup(Closure $closure, bool $auth = true)
  * @method static string name()
  * @method static string directory(...$paths)
