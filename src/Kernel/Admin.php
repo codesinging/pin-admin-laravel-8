@@ -11,6 +11,8 @@ use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -28,6 +30,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static PinAdmin boot(string $name)
  * @method static Application app(string $name = null)
  * @method static Application[] apps()
+ * @method static string template(string $path)
+ * @method static Factory|View view(string $view = null, array $data = [], array $mergeData = [])
+ * @method static Factory|View page(string $view = null, array $data = [])
  * @method static Application routeGroup(Closure $closure, bool $auth = true)
  * @method static string name()
  * @method static string directory(...$paths)
