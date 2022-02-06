@@ -124,6 +124,10 @@ class PinAdminServiceProvider extends ServiceProvider
     protected function loadViews()
     {
         $this->loadViewsFrom(Admin::packagePath('resources', 'views'), Admin::label());
+
+        foreach (Admin::apps() as $app) {
+            $this->loadViewsFrom($app->path('views'), Admin::label($app->name(), '_'));
+        }
     }
 
     /**
@@ -152,11 +156,9 @@ class PinAdminServiceProvider extends ServiceProvider
      */
     protected function configureAuthentication()
     {
-        $applications = Admin::apps();
-
-        foreach ($applications as $name => $application) {
-            Config::set('auth.guards.' . $application->guard(), $application->config('auth_guard'));
-            Config::set('auth.providers.' . $application->config('auth_guard.provider'), $application->config('auth_provider'));
+        foreach (Admin::apps() as $name => $app) {
+            Config::set('auth.guards.' . $app->guard(), $app->config('auth_guard'));
+            Config::set('auth.providers.' . $app->config('auth_guard.provider'), $app->config('auth_provider'));
         }
     }
 
