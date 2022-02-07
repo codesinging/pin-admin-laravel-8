@@ -32,7 +32,7 @@ class CreateCommandTest extends TestCase
         Admin::load('admin')->boot('admin');
 
         self::assertDirectoryExists(Admin::baseAppPath());
-        self::assertFileExists(Admin::baseAppPath('indexes.php'));
+        self::assertFileExists(Admin::basePath('apps.php'));
         self::assertArrayHasKey('admin', Admin::indexes());
 
         self::assertDirectoryExists(Admin::path());

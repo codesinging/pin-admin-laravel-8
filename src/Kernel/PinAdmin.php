@@ -220,7 +220,7 @@ class PinAdmin
      */
     public function isInstalled(): bool
     {
-        return file_exists($this->baseAppPath('indexes.php'));
+        return file_exists($this->basePath('apps.php'));
     }
 
     /**
@@ -231,7 +231,7 @@ class PinAdmin
     public function indexes(): array
     {
         if ($this->isInstalled()) {
-            return include($this->baseAppPath('indexes.php'));
+            return include($this->basePath('apps.php'));
         }
         return [];
     }
