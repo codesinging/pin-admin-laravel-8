@@ -25,7 +25,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = PinAdmin::LABEL . ':create {name} {--D|directory=} {--G|guard=}';
+    protected $signature = PinAdmin::LABEL . ':create {name}';
 
     /**
      * The console command description.
@@ -39,28 +39,14 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected string $applicationName;
-
-    /**
-     * The application guard.
-     *
-     * @var string
-     */
-    protected string $applicationGuard;
-
-    /**
-     * The application directory.
-     *
-     * @var string
-     */
-    protected string $applicationDirectory;
+    protected string $appName;
 
     /**
      * The application.
      *
      * @var Application
      */
-    protected Application $application;
+    protected Application $app;
 
     /**
      * The applications.
@@ -79,8 +65,6 @@ class CreateCommand extends Command
         'Models',
         'Middleware',
         'Requests',
-        'Database',
-        'Migrations',
     ];
 
     /**
@@ -92,7 +76,7 @@ class CreateCommand extends Command
             $this->init();
 
             if ($this->existed()) {
-                $this->error(sprintf('Application [%s] already exists', $this->applicationName));
+                $this->error(sprintf('Application [%s] already exists', $this->appName));
             } else {
                 $this->createDirectories();
                 $this->createRoutes();
@@ -105,7 +89,7 @@ class CreateCommand extends Command
                 $this->updateIndexes();
             }
         } else {
-            $this->error(sprintf('Application name [%s] is invalid', $this->applicationName));
+            $this->error(sprintf('Application name [%s] is invalid', $this->appName));
         }
     }
 
@@ -115,9 +99,7 @@ class CreateCommand extends Command
     private function init(): void
     {
         $this->indexes = Admin::indexes();
-        $this->applicationGuard = $this->option('guard') ?: $this->applicationName;
-        $this->applicationDirectory = $this->option('directory') ?: Str::studly($this->applicationName);
-        $this->application = new Application($this->applicationName, ['directory' => $this->applicationDirectory]);
+        $this->app = new Application($this->appName);
     }
 
     /**
@@ -127,8 +109,8 @@ class CreateCommand extends Command
      */
     private function verify(): bool
     {
-        $this->applicationName = Str::snake($this->argument('name'));
-        return !empty($this->applicationName) && preg_match('/^[a-zA-Z]+\w*$/', $this->applicationName) === 1;
+        $this->appName = Str::snake($this->argument('name'));
+        return !empty($this->appName) && preg_match('/^[a-zA-Z]+\w*$/', $this->appName) === 1;
     }
 
     /**
@@ -138,7 +120,7 @@ class CreateCommand extends Command
      */
     private function existed(): bool
     {
-        return array_key_exists($this->applicationName, $this->indexes);
+        return array_key_exists($this->appName, $this->indexes);
     }
 
     /**
@@ -148,10 +130,10 @@ class CreateCommand extends Command
     {
         $this->title('Creating application directories');
 
-        $this->makeDirectory($this->application->path());
+        $this->makeDirectory($this->app->path());
 
         foreach ($this->directories as $directory) {
-            $this->makeDirectory($this->application->path($directory));
+            $this->makeDirectory($this->app->path($directory));
         }
     }
 
@@ -163,7 +145,7 @@ class CreateCommand extends Command
         $this->title('Create application routes');
         $this->copyFile(
             Admin::packagePath('stubs', 'routes.php'),
-            $this->application->path('routes.php'),
+            $this->app->path('routes.php'),
             $this->replaces()
         );
     }
@@ -176,7 +158,7 @@ class CreateCommand extends Command
         $this->title('Create application config file');
         $this->copyFile(
             Admin::packagePath('stubs', 'config.php'),
-            $this->application->path('config.php'),
+            $this->app->path('config.php'),
             $this->replaces()
         );
     }
@@ -189,7 +171,7 @@ class CreateCommand extends Command
         $this->title('Create application controllers');
         $this->copyFiles(
             Admin::packagePath('stubs/controllers'),
-            $this->application->path('Controllers'),
+            $this->app->path('Controllers'),
             $this->replaces()
         );
     }
@@ -202,7 +184,7 @@ class CreateCommand extends Command
         $this->title('Create application models');
         $this->copyFiles(
             Admin::packagePath('stubs/models'),
-            $this->application->path('Models'),
+            $this->app->path('Models'),
             $this->replaces(),
             $this->replaces()
         );
@@ -252,21 +234,21 @@ class CreateCommand extends Command
 
         $this->copyFile(
             Admin::packagePath('stubs/config.js'),
-            $this->application->resourcePath('config.js'),
+            $this->app->resourcePath('config.js'),
             [
-                '__DUMMY_DIST_PATH__' => 'public/' . $this->application->assetDirectory(),
-                '__DUMMY_SRC_PATH__' => 'resources/' . $this->application->resourceDirectory(),
+                '__DUMMY_DIST_PATH__' => 'public/' . $this->app->assetDirectory(),
+                '__DUMMY_SRC_PATH__' => 'resources/' . $this->app->resourceDirectory(),
             ]
         );
 
-        $this->copyDirectory(Admin::packagePath('resources/images'), $this->application->assetPath('images'));
+        $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->assetPath('images'));
 
-        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->application->resourcePath());
+        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->app->resourcePath());
 
         $this->addPackageScripts([
-            Admin::label('dev', '-') . ':' . $this->application->name() => sprintf('mix --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
-            Admin::label('watch', '-') . ':' . $this->application->name() => sprintf('mix watch --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
-            Admin::label('prod', '-') . ':' . $this->application->name() => sprintf('mix --production --mix-config=resources/%s/webpack.mix.js', $this->application->resourceDirectory()),
+            Admin::label('dev', '-') . ':' . $this->app->name() => sprintf('mix --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
+            Admin::label('watch', '-') . ':' . $this->app->name() => sprintf('mix watch --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
+            Admin::label('prod', '-') . ':' . $this->app->name() => sprintf('mix --production --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
         ]);
 
         $this->addDependencies([
@@ -284,10 +266,10 @@ class CreateCommand extends Command
     private function updateIndexes(): void
     {
         $this->title('Update application indexes');
-        $this->indexes[$this->applicationName] = [
-            'name' => $this->applicationName,
-            'guard' => $this->applicationGuard,
-            'directory' => $this->applicationDirectory,
+        $this->indexes[$this->appName] = [
+            'name' => $this->appName,
+            'guard' => $this->app->guard(),
+            'directory' => $this->app->directory(),
             'status' => true,
         ];
         $this->copyFile(
@@ -306,12 +288,12 @@ class CreateCommand extends Command
     {
         return [
             '__DUMMY_UPPER_LABEL__' => Str::upper(Admin::label()),
-            '__DUMMY_UPPER_NAME__' => Str::upper($this->applicationName),
-            '__DUMMY_NAME__' => $this->applicationName,
-            '__DUMMY_STUDLY_NAME__' => Str::studly($this->applicationName),
-            '__DUMMY_CAMEL_NAME__' => Str::camel($this->applicationName),
-            '__DUMMY_GUARD__' => $this->applicationGuard,
-            '__DUMMY_NAMESPACE__' => $this->application->getNamespace(),
+            '__DUMMY_UPPER_NAME__' => Str::upper($this->appName),
+            '__DUMMY_NAME__' => $this->appName,
+            '__DUMMY_STUDLY_NAME__' => Str::studly($this->appName),
+            '__DUMMY_CAMEL_NAME__' => Str::camel($this->appName),
+            '__DUMMY_GUARD__' => $this->app->guard(),
+            '__DUMMY_NAMESPACE__' => $this->app->getNamespace(),
         ];
     }
 }
