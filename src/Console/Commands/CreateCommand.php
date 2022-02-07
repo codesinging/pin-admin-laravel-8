@@ -234,6 +234,8 @@ class CreateCommand extends Command
     {
         $this->title('Publishing application static resources');
 
+        $this->copyDirectory(Admin::packagePath('resources/views'), $this->app->path('views'));
+
         $this->copyFiles(
             Admin::packagePath('stubs/build'),
             $this->app->path('build'),
