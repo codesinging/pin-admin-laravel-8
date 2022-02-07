@@ -21,7 +21,7 @@ class Application
     /**
      * PinAdmin 应用的基础目录
      */
-    const BASE_DIRECTORY = PinAdmin::BASE_DIRECTORY;
+    const BASE_DIRECTORY = PinAdmin::BASE_APP_DIRECTORY;
 
     /**
      * 应用名称

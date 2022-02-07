@@ -50,7 +50,7 @@ class ApplicationTest extends TestCase
 
         self::assertInstanceOf(Repository::class, $application->config());
         self::assertEquals('Title', $application->config('title'));
-        self::assertEquals('Default', $application->config('name', 'Default'));
+        self::assertEquals('Default', $application->config('message', 'Default'));
         self::assertNull($application->config('name'));
     }
 

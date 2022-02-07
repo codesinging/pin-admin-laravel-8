@@ -15,7 +15,7 @@ class CreateCommandTest extends TestCase
 {
     protected function tearDown(): void
     {
-        File::deleteDirectory(Admin::basePath());
+        File::deleteDirectory(Admin::baseAppPath());
         File::deleteDirectory(Admin::baseAssetDirectory());
     }
 
@@ -27,12 +27,12 @@ class CreateCommandTest extends TestCase
         }
         self::assertFileDoesNotExist($configFile);
 
-        $this->artisan('admin:create admin');
-
         Admin::load('admin')->boot('admin');
 
-        self::assertDirectoryExists(Admin::basePath());
-        self::assertFileExists(Admin::basePath('indexes.php'));
+        $this->artisan('admin:create admin');
+
+        self::assertDirectoryExists(Admin::baseAppPath());
+        self::assertFileExists(Admin::baseAppPath('indexes.php'));
         self::assertArrayHasKey('admin', Admin::indexes());
 
         self::assertDirectoryExists(Admin::path());

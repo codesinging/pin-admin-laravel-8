@@ -29,22 +29,22 @@ class PinAdminTest extends TestCase
         self::assertEquals(__DIR__, $admin->packagePath('tests', 'Kernel'));
     }
 
-    public function testBaseDirectory()
+    public function testBaseAppDirectory()
     {
         $admin = new PinAdmin();
 
-        self::assertEquals(PinAdmin::BASE_DIRECTORY, $admin->baseDirectory());
-        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->baseDirectory('Admin'));
-        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers', $admin->baseDirectory('Admin', 'Controllers'));
+        self::assertEquals(PinAdmin::BASE_APP_DIRECTORY, $admin->baseAppDirectory());
+        self::assertEquals(PinAdmin::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->baseAppDirectory('Admin'));
+        self::assertEquals(PinAdmin::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers', $admin->baseAppDirectory('Admin', 'Controllers'));
     }
 
-    public function testBasePath()
+    public function testBaseAppPath()
     {
         $admin = new PinAdmin();
 
-        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY), $admin->basePath());
-        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $admin->basePath('Admin'));
-        self::assertEquals(app_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $admin->basePath('Admin', 'Controllers'));
+        self::assertEquals(app_path(PinAdmin::BASE_APP_DIRECTORY), $admin->baseAppPath());
+        self::assertEquals(app_path(PinAdmin::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $admin->baseAppPath('Admin'));
+        self::assertEquals(app_path(PinAdmin::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $admin->baseAppPath('Admin', 'Controllers'));
     }
 
     public function testBaseAssetDirectory()

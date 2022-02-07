@@ -274,7 +274,7 @@ class CreateCommand extends Command
         ];
         $this->copyFile(
             Admin::packagePath('stubs', 'indexes.php'),
-            Admin::basePath('indexes.php'),
+            Admin::baseAppPath('indexes.php'),
             ['__DUMMY_INDEXES__' => $this->varExport($this->indexes, true)]
         );
     }

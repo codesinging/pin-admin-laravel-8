@@ -59,9 +59,9 @@ class PinAdmin
     const SLOGAN = 'A Laravel package to rapidly build administrative applications';
 
     /**
-     * PinAdmin 应用基础目录，相对于 `app`
+     * PinAdmin 应用类基础目录，相对于 `app_path`
      */
-    const BASE_DIRECTORY = 'PinAdmin';
+    const BASE_APP_DIRECTORY = 'PinAdmin';
 
     /**
      * 所有的 PinAdmin 应用实例
@@ -126,28 +126,28 @@ class PinAdmin
     }
 
     /**
-     * 返回 PinAdmin 基础目录，相对于 `app`
+     * 返回 PinAdmin 应用类基础目录，相对于 `app_path`
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function baseDirectory(...$paths): string
+    public function baseAppDirectory(...$paths): string
     {
-        array_unshift($paths, self::BASE_DIRECTORY);
+        array_unshift($paths, self::BASE_APP_DIRECTORY);
         return implode(DIRECTORY_SEPARATOR, $paths);
     }
 
     /**
-     * 返回 PinAdmin 的基础路径
+     * 返回 PinAdmin 应用类基础路径
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function basePath(...$paths): string
+    public function baseAppPath(...$paths): string
     {
-        return app_path($this->baseDirectory(...$paths));
+        return app_path($this->baseAppDirectory(...$paths));
     }
 
     /**
@@ -159,7 +159,7 @@ class PinAdmin
      */
     public function baseAssetDirectory(...$paths): string
     {
-        array_unshift($paths, 'static', Str::kebab(self::BASE_DIRECTORY));
+        array_unshift($paths, 'static', Str::kebab(self::BASE_APP_DIRECTORY));
         return implode('/', $paths);
     }
 
@@ -184,7 +184,7 @@ class PinAdmin
      */
     public function baseResourceDirectory(...$paths): string
     {
-        array_unshift($paths, Str::kebab(self::BASE_DIRECTORY));
+        array_unshift($paths, Str::kebab(self::BASE_APP_DIRECTORY));
         return implode('/', $paths);
     }
 
@@ -207,7 +207,7 @@ class PinAdmin
      */
     public function isInstalled(): bool
     {
-        return file_exists($this->basePath('indexes.php'));
+        return file_exists($this->baseAppPath('indexes.php'));
     }
 
     /**
@@ -218,7 +218,7 @@ class PinAdmin
     public function indexes(): array
     {
         if ($this->isInstalled()) {
-            return include($this->basePath('indexes.php'));
+            return include($this->baseAppPath('indexes.php'));
         }
         return [];
     }
