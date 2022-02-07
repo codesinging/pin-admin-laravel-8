@@ -69,6 +69,7 @@ class PinAdminServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->registerCommands();
+            $this->loadMigrations();
             $this->exportConfiguration();
         }
 
@@ -109,8 +110,7 @@ class PinAdminServiceProvider extends ServiceProvider
      */
     protected function loadRoutes()
     {
-        $apps = Admin::apps();
-        foreach ($apps as $app) {
+        foreach (Admin::apps() as $app) {
             $this->loadRoutesFrom($app->path('routes','web.php'));
         }
     }
@@ -126,6 +126,17 @@ class PinAdminServiceProvider extends ServiceProvider
 
         foreach (Admin::apps() as $app) {
             $this->loadViewsFrom($app->appPath('views'), Admin::label($app->name(), '_'));
+        }
+    }
+
+    /**
+     * 加载数据库迁移
+     * @return void
+     */
+    protected function loadMigrations()
+    {
+        foreach (Admin::apps() as $app) {
+            $this->loadMigrationsFrom($app->path('migrations'));
         }
     }
 

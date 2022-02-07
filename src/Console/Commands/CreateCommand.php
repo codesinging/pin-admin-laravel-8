@@ -200,7 +200,7 @@ class CreateCommand extends Command
         $this->title('Create application migrations');
         $this->copyFiles(
             Admin::packagePath('stubs/migrations'),
-            database_path('migrations'),
+            $this->app->path('migrations'),
             $this->replaces(),
             $this->replaces()
         );
