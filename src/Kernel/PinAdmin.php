@@ -59,6 +59,11 @@ class PinAdmin
     const SLOGAN = 'A Laravel package to rapidly build administrative applications';
 
     /**
+     * PinAdmin 应用基础目录，相对于 `base_path`
+     */
+    const BASE_DIRECTORY = 'admin';
+
+    /**
      * PinAdmin 应用类基础目录，相对于 `app_path`
      */
     const BASE_APP_DIRECTORY = 'PinAdmin';
@@ -126,6 +131,19 @@ class PinAdmin
     }
 
     /**
+     * 返回 PinAdmin 应用基础目录，相对于 `base_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function baseDirectory(...$paths): string
+    {
+        array_unshift($paths, self::BASE_DIRECTORY);
+        return implode(DIRECTORY_SEPARATOR, $paths);
+    }
+
+    /**
      * 返回 PinAdmin 应用类基础目录，相对于 `app_path`
      *
      * @param ...$paths
@@ -136,6 +154,18 @@ class PinAdmin
     {
         array_unshift($paths, self::BASE_APP_DIRECTORY);
         return implode(DIRECTORY_SEPARATOR, $paths);
+    }
+
+    /**
+     * 返回 PinAdmin 应用基础路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function basePath(...$paths): string
+    {
+        return base_path($this->baseDirectory(...$paths));
     }
 
     /**

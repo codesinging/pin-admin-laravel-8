@@ -29,6 +29,24 @@ class PinAdminTest extends TestCase
         self::assertEquals(__DIR__, $admin->packagePath('tests', 'Kernel'));
     }
 
+    public function testBaseDirectory()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(PinAdmin::BASE_DIRECTORY, $admin->baseDirectory());
+        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin', $admin->baseDirectory('admin'));
+        self::assertEquals(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config', $admin->baseDirectory('admin', 'config'));
+    }
+
+    public function testBasePath()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(base_path(PinAdmin::BASE_DIRECTORY), $admin->basePath());
+        self::assertEquals(base_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin'), $admin->basePath('admin'));
+        self::assertEquals(base_path(PinAdmin::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config'), $admin->basePath('admin', 'config'));
+    }
+
     public function testBaseAppDirectory()
     {
         $admin = new PinAdmin();

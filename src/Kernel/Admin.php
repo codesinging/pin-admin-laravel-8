@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static string label(string $suffix = null, string $separator = '_')
  * @method static string packagePath(...$paths)
+ * @method static string baseDirectory(...$paths)
+ * @method static string basePath(...$paths)
  * @method static string baseAppDirectory(...$paths)
  * @method static string baseAppPath(...$paths)
  * @method static string baseAssetDirectory(...$paths)
