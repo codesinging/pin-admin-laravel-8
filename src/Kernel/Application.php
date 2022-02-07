@@ -207,7 +207,7 @@ class Application
      */
     protected function initConfig()
     {
-        if (file_exists($file = $this->appPath('config.php'))) {
+        if (file_exists($file = $this->path('config/app.php'))) {
             $items = require($file);
         }
         $this->config = new Repository($items ?? []);

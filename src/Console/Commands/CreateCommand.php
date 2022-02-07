@@ -157,8 +157,8 @@ class CreateCommand extends Command
     {
         $this->title('Create application config file');
         $this->copyFile(
-            Admin::packagePath('stubs', 'config.php'),
-            $this->app->appPath('config.php'),
+            Admin::packagePath('stubs', 'config', 'app.php'),
+            $this->app->path('config', 'app.php'),
             $this->replaces()
         );
     }
