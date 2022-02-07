@@ -37,6 +37,7 @@ class CreateCommandTest extends TestCase
 
         self::assertDirectoryExists(Admin::path());
         self::assertDirectoryExists(Admin::appPath());
+        self::assertDirectoryExists(Admin::publicPath());
 
         self::assertFileExists(Admin::path('routes', 'web.php'));
         self::assertFileExists(Admin::path('config', 'app.php'));

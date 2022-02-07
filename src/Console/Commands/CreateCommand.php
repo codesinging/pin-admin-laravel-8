@@ -130,7 +130,9 @@ class CreateCommand extends Command
     {
         $this->title('Creating application directories');
 
+        $this->makeDirectory($this->app->path());
         $this->makeDirectory($this->app->appPath());
+        $this->makeDirectory($this->app->publicPath());
 
         foreach ($this->directories as $directory) {
             $this->makeDirectory($this->app->appPath($directory));
@@ -233,11 +235,11 @@ class CreateCommand extends Command
         $this->title('Publishing application static resources');
 
         $this->copyFile(
-            Admin::packagePath('stubs/config.js'),
-            $this->app->resourcePath('config.js'),
+            Admin::packagePath('stubs/assets/config.js'),
+            $this->app->path('assets/build/config.js'),
             [
-                '__DUMMY_DIST_PATH__' => 'public/' . $this->app->assetDirectory(),
-                '__DUMMY_SRC_PATH__' => 'resources/' . $this->app->resourceDirectory(),
+                '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
+                '__DUMMY_SRC_PATH__' => $this->app->directory('assets'),
             ]
         );
 
