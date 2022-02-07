@@ -10,7 +10,7 @@ use CodeSinging\PinAdmin\Routing\Controller;
 
 class AuthController extends Controller
 {
-    public function index(): string
+    public function index()
     {
         return page('auth/index');
     }

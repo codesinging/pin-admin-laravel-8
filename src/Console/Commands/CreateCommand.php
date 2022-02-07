@@ -241,16 +241,17 @@ class CreateCommand extends Command
             $this->app->path('build'),
             [
                 '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
-                '__DUMMY_SRC_PATH__' => $this->app->directory('assets'),
+                '__DUMMY_SRC_PATH__' => $this->app->directory(),
             ]
         );
 
         $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
 
-        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->app->path('assets'));
+        $this->copyDirectory(Admin::packagePath('resources/js'), $this->app->path('js'));
+        $this->copyDirectory(Admin::packagePath('resources/css'), $this->app->path('css'));
         $this->copyDirectory(Admin::packagePath('resources/pages'), $this->app->path('pages'));
 
-        $webpack = sprintf('resources/%s/webpack.mix.js', $this->app->directory('build'));
+        $webpack = $this->app->directory('build/webpack.mix.js');
         $this->addPackageScripts([
             Admin::label('dev', '-') . ':' . $this->app->name() => "mix --mix-config=$webpack",
             Admin::label('watch', '-') . ':' . $this->app->name() => "mix watch --mix-config=$webpack",
