@@ -22,7 +22,7 @@ class CreateCommandTest extends TestCase
     public function testCreate()
     {
         $configFile = config_path(Admin::label('php', '.'));
-        if (File::exists($configFile)){
+        if (File::exists($configFile)) {
             File::delete($configFile);
         }
         self::assertFileDoesNotExist($configFile);
@@ -35,8 +35,10 @@ class CreateCommandTest extends TestCase
         self::assertFileExists(Admin::baseAppPath('indexes.php'));
         self::assertArrayHasKey('admin', Admin::indexes());
 
+        self::assertDirectoryExists(Admin::path());
         self::assertDirectoryExists(Admin::appPath());
-        self::assertFileExists(Admin::appPath('routes.php'));
+
+        self::assertFileExists(Admin::path('routes', 'web.php'));
         self::assertFileExists(Admin::path('config', 'app.php'));
 
         self::assertEquals('Admin', Admin::config('name'));

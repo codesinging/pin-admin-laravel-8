@@ -143,9 +143,9 @@ class CreateCommand extends Command
     private function createRoutes(): void
     {
         $this->title('Create application routes');
-        $this->copyFile(
-            Admin::packagePath('stubs', 'routes.php'),
-            $this->app->appPath('routes.php'),
+        $this->copyFiles(
+            Admin::packagePath('stubs', 'routes'),
+            $this->app->path('routes'),
             $this->replaces()
         );
     }
