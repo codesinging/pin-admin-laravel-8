@@ -17,22 +17,22 @@ class ApplicationTest extends TestCase
         self::assertEquals('admin', (new Application('admin'))->name());
     }
 
-    public function testDirectory()
+    public function testAppDirectory()
     {
         $application = new Application('admin');
 
-        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $application->directory());
-        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers', $application->directory('Controllers'));
-        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'IndexController.php', $application->directory('Controllers', 'IndexController.php'));
+        self::assertEquals(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $application->appDirectory());
+        self::assertEquals(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers', $application->appDirectory('Controllers'));
+        self::assertEquals(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'IndexController.php', $application->appDirectory('Controllers', 'IndexController.php'));
     }
 
-    public function testPath()
+    public function testAppPath()
     {
         $application = new Application('admin');
 
-        self::assertEquals(app_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $application->path());
-        self::assertEquals(app_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $application->path('Controllers'));
-        self::assertEquals(app_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'IndexController.php'), $application->path('Controllers', 'IndexController.php'));
+        self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $application->appPath());
+        self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $application->appPath('Controllers'));
+        self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'IndexController.php'), $application->appPath('Controllers', 'IndexController.php'));
     }
 
     public function testNamespace()

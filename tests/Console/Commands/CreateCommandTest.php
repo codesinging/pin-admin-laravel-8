@@ -6,7 +6,6 @@
 
 namespace Tests\Console\Commands;
 
-use CodeSinging\PinAdmin\Console\Commands\CreateCommand;
 use CodeSinging\PinAdmin\Kernel\Admin;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -27,17 +26,18 @@ class CreateCommandTest extends TestCase
         }
         self::assertFileDoesNotExist($configFile);
 
-        Admin::load('admin')->boot('admin');
 
         $this->artisan('admin:create admin');
+
+        Admin::load('admin')->boot('admin');
 
         self::assertDirectoryExists(Admin::baseAppPath());
         self::assertFileExists(Admin::baseAppPath('indexes.php'));
         self::assertArrayHasKey('admin', Admin::indexes());
 
-        self::assertDirectoryExists(Admin::path());
-        self::assertFileExists(Admin::path('routes.php'));
-        self::assertFileExists(Admin::path('config.php'));
+        self::assertDirectoryExists(Admin::appPath());
+        self::assertFileExists(Admin::appPath('routes.php'));
+        self::assertFileExists(Admin::appPath('config.php'));
 
         self::assertEquals('Admin', Admin::config('name'));
         self::assertEquals('admin', Admin::config('route_prefix'));

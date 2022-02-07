@@ -118,7 +118,7 @@ class PinAdminTest extends TestCase
         $admin->load('admin')->boot('admin');
 
         self::assertEquals('admin', $admin->name());
-        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->directory());
+        self::assertEquals(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin', $admin->appDirectory());
 
         self::assertEquals('App\\PinAdmin\\Admin', $admin->getNamespace());
         self::assertEquals('App\\PinAdmin\\Admin\\Controllers', $admin->getNamespace('Controllers'));

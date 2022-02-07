@@ -19,8 +19,8 @@ use Illuminate\Support\Str;
 
 /**
  * @method string name()
- * @method string directory(...$paths)
- * @method string path(...$paths)
+ * @method string appDirectory(...$paths)
+ * @method string appPath(...$paths)
  * @method string getNamespace(...$paths)
  * @method array|mixed config(string $key = null, $default = null)
  * @method Guard|StatefulGuard auth()

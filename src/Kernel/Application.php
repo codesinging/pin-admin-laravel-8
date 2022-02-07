@@ -21,7 +21,7 @@ class Application
     /**
      * PinAdmin 应用的基础目录
      */
-    const BASE_DIRECTORY = PinAdmin::BASE_APP_DIRECTORY;
+    const BASE_APP_DIRECTORY = PinAdmin::BASE_APP_DIRECTORY;
 
     /**
      * 应用名称
@@ -38,9 +38,9 @@ class Application
     protected string $guard;
 
     /**
-     * @var string 应用目录
+     * @var string 应用类目录
      */
-    protected string $directory;
+    protected string $appDirectory;
 
     /**
      * 应用启动参数
@@ -65,7 +65,7 @@ class Application
         $this->name = $name;
         $this->options = $options;
         $this->guard = $this->options['guard'] ?? $this->name;
-        $this->directory = self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . ($this->options['directory'] ?? Str::studly($name));
+        $this->appDirectory = $this->options['appDirectory'] ?? (self::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . Str::studly($name));
         $this->initConfig();
     }
 
@@ -90,28 +90,28 @@ class Application
     }
 
     /**
-     * 获取应用目录，相对于 `app` 目录
+     * 获取应用类目录，相对于 `app_path`
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function directory(...$paths): string
+    public function appDirectory(...$paths): string
     {
-        array_unshift($paths, $this->directory);
+        array_unshift($paths, $this->appDirectory);
         return implode(DIRECTORY_SEPARATOR, $paths);
     }
 
     /**
-     * 获取应用的路径
+     * 获取应用类路径
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function path(...$paths): string
+    public function appPath(...$paths): string
     {
-        return app_path($this->directory(...$paths));
+        return app_path($this->appDirectory(...$paths));
     }
 
     /**
@@ -123,7 +123,7 @@ class Application
      */
     public function getNamespace(...$paths): string
     {
-        return implode('\\', ['App', str_replace('/', '\\', $this->directory(...$paths))]);
+        return implode('\\', ['App', str_replace('/', '\\', $this->appDirectory(...$paths))]);
     }
 
     /**
@@ -133,7 +133,7 @@ class Application
      */
     protected function initConfig()
     {
-        if (file_exists($file = $this->path('config.php'))) {
+        if (file_exists($file = $this->appPath('config.php'))) {
             $items = require($file);
         }
         $this->config = new Repository($items ?? []);
@@ -249,7 +249,7 @@ class Application
      */
     public function resourceDirectory(...$paths): string
     {
-        array_unshift($paths, Str::kebab(self::BASE_DIRECTORY), $this->name());
+        array_unshift($paths, Str::kebab(self::BASE_APP_DIRECTORY), $this->name());
         return implode('/', $paths);
     }
 
@@ -274,7 +274,7 @@ class Application
      */
     public function assetDirectory(...$paths): string
     {
-        array_unshift($paths, 'static', Str::kebab(self::BASE_DIRECTORY), $this->name());
+        array_unshift($paths, 'static', Str::kebab(self::BASE_APP_DIRECTORY), $this->name());
         return implode('/', $paths);
     }
 

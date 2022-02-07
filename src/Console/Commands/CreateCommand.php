@@ -130,10 +130,10 @@ class CreateCommand extends Command
     {
         $this->title('Creating application directories');
 
-        $this->makeDirectory($this->app->path());
+        $this->makeDirectory($this->app->appPath());
 
         foreach ($this->directories as $directory) {
-            $this->makeDirectory($this->app->path($directory));
+            $this->makeDirectory($this->app->appPath($directory));
         }
     }
 
@@ -145,7 +145,7 @@ class CreateCommand extends Command
         $this->title('Create application routes');
         $this->copyFile(
             Admin::packagePath('stubs', 'routes.php'),
-            $this->app->path('routes.php'),
+            $this->app->appPath('routes.php'),
             $this->replaces()
         );
     }
@@ -158,7 +158,7 @@ class CreateCommand extends Command
         $this->title('Create application config file');
         $this->copyFile(
             Admin::packagePath('stubs', 'config.php'),
-            $this->app->path('config.php'),
+            $this->app->appPath('config.php'),
             $this->replaces()
         );
     }
@@ -171,7 +171,7 @@ class CreateCommand extends Command
         $this->title('Create application controllers');
         $this->copyFiles(
             Admin::packagePath('stubs/controllers'),
-            $this->app->path('Controllers'),
+            $this->app->appPath('Controllers'),
             $this->replaces()
         );
     }
@@ -184,7 +184,7 @@ class CreateCommand extends Command
         $this->title('Create application models');
         $this->copyFiles(
             Admin::packagePath('stubs/models'),
-            $this->app->path('Models'),
+            $this->app->appPath('Models'),
             $this->replaces(),
             $this->replaces()
         );
@@ -269,7 +269,7 @@ class CreateCommand extends Command
         $this->indexes[$this->appName] = [
             'name' => $this->appName,
             'guard' => $this->app->guard(),
-            'directory' => $this->app->directory(),
+            'appDirectory' => $this->app->appDirectory(),
             'status' => true,
         ];
         $this->copyFile(

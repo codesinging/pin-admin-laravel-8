@@ -112,7 +112,7 @@ class PinAdminServiceProvider extends ServiceProvider
     {
         $applications = Admin::apps();
         foreach ($applications as $application) {
-            $this->loadRoutesFrom($application->path('routes.php'));
+            $this->loadRoutesFrom($application->appPath('routes.php'));
         }
     }
 
@@ -126,7 +126,7 @@ class PinAdminServiceProvider extends ServiceProvider
         $this->loadViewsFrom(Admin::packagePath('resources', 'views'), Admin::label());
 
         foreach (Admin::apps() as $app) {
-            $this->loadViewsFrom($app->path('views'), Admin::label($app->name(), '_'));
+            $this->loadViewsFrom($app->appPath('views'), Admin::label($app->name(), '_'));
         }
     }
 

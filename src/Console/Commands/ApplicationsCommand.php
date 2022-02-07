@@ -47,7 +47,7 @@ class ApplicationsCommand extends Command
                 count($data) + 1,
                 $options['name'],
                 $options['guard'],
-                $options['directory'],
+                $options['appDirectory'],
                 $options['status'] ? 'true' : 'false'
             ];
         }
