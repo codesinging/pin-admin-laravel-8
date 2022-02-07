@@ -242,6 +242,7 @@ class CreateCommand extends Command
             [
                 '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
                 '__DUMMY_SRC_PATH__' => $this->app->directory(),
+                '__DUMMY_DIRECTORY__' => $this->app->directory(),
             ]
         );
 
@@ -260,6 +261,9 @@ class CreateCommand extends Command
 
         $this->addDependencies([
             'vue' => '^3.2.29',
+            'tailwindcss' => '^3.0.18',
+            'postcss' => '^8.1.14',
+            'autoprefixer' => '^10.4.2',
         ]);
 
         $this->addDevDependencies([
