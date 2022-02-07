@@ -17,6 +17,24 @@ class ApplicationTest extends TestCase
         self::assertEquals('admin', (new Application('admin'))->name());
     }
 
+    public function testDirectory()
+    {
+        $application = new Application('admin');
+
+        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin', $application->directory());
+        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config', $application->directory('config'));
+        self::assertEquals(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php', $application->directory('config', 'app.php'));
+    }
+
+    public function testPath()
+    {
+        $application = new Application('admin');
+
+        self::assertEquals(base_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin'), $application->path());
+        self::assertEquals(base_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config'), $application->path('config'));
+        self::assertEquals(base_path(Application::BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php'), $application->path('config', 'app.php'));
+    }
+
     public function testAppDirectory()
     {
         $application = new Application('admin');
@@ -33,6 +51,24 @@ class ApplicationTest extends TestCase
         self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin'), $application->appPath());
         self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $application->appPath('Controllers'));
         self::assertEquals(app_path(Application::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'IndexController.php'), $application->appPath('Controllers', 'IndexController.php'));
+    }
+
+    public function testPublicDirectory()
+    {
+        $application = new Application('admin');
+
+        self::assertEquals(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin', $application->publicDirectory());
+        self::assertEquals(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'images', $application->publicDirectory('images'));
+        self::assertEquals(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'logo.png', $application->publicDirectory('images', 'logo.png'));
+    }
+
+    public function testPublicPath()
+    {
+        $application = new Application('admin');
+
+        self::assertEquals(public_path(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin'), $application->publicPath());
+        self::assertEquals(public_path(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'images'), $application->publicPath('images'));
+        self::assertEquals(public_path(Application::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'logo.png'), $application->publicPath('images', 'logo.png'));
     }
 
     public function testNamespace()

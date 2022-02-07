@@ -15,12 +15,15 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * @method string name()
+ * @method string directory(...$paths)
  * @method string appDirectory(...$paths)
+ * @method string publicDirectory(...$paths)
+ * @method string path(...$paths)
  * @method string appPath(...$paths)
+ * @method string publicPath(...$paths)
  * @method string getNamespace(...$paths)
  * @method array|mixed config(string $key = null, $default = null)
  * @method Guard|StatefulGuard auth()

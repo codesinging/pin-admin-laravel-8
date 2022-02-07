@@ -269,7 +269,9 @@ class CreateCommand extends Command
         $this->indexes[$this->appName] = [
             'name' => $this->appName,
             'guard' => $this->app->guard(),
+            'directory' => $this->app->directory(),
             'appDirectory' => $this->app->appDirectory(),
+            'publicDirectory' => $this->app->publicDirectory(),
             'status' => true,
         ];
         $this->copyFile(

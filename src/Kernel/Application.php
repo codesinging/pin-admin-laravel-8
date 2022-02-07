@@ -19,9 +19,19 @@ use Illuminate\Support\Str;
 class Application
 {
     /**
-     * PinAdmin 应用的基础目录
+     * PinAdmin 应用基础目录
+     */
+    const BASE_DIRECTORY = PinAdmin::BASE_DIRECTORY;
+
+    /**
+     * PinAdmin 应用类基础目录
      */
     const BASE_APP_DIRECTORY = PinAdmin::BASE_APP_DIRECTORY;
+
+    /**
+     * PinAdmin 应用公共文件基础目录
+     */
+    const BASE_PUBLIC_DIRECTORY = PinAdmin::BASE_PUBLIC_DIRECTORY;
 
     /**
      * 应用名称
@@ -38,9 +48,19 @@ class Application
     protected string $guard;
 
     /**
+     * @var string 应用目录
+     */
+    protected string $directory;
+
+    /**
      * @var string 应用类目录
      */
     protected string $appDirectory;
+
+    /**
+     * @var string 应用公共目录
+     */
+    protected string $publicDirectory;
 
     /**
      * 应用启动参数
@@ -64,8 +84,12 @@ class Application
     {
         $this->name = $name;
         $this->options = $options;
+
         $this->guard = $this->options['guard'] ?? $this->name;
+        $this->directory = $this->options['directory'] ?? (self::BASE_DIRECTORY . DIRECTORY_SEPARATOR . Str::snake($name));
         $this->appDirectory = $this->options['appDirectory'] ?? (self::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . Str::studly($name));
+        $this->publicDirectory = $this->options['publicDirectory'] ?? (self::BASE_PUBLIC_DIRECTORY . DIRECTORY_SEPARATOR . Str::snake($name));
+
         $this->initConfig();
     }
 
@@ -87,6 +111,31 @@ class Application
     public function guard(): string
     {
         return $this->guard;
+    }
+
+    /**
+     * 获取应用目录，相对于 `base_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function directory(...$paths): string
+    {
+        array_unshift($paths, $this->directory);
+        return implode(DIRECTORY_SEPARATOR, $paths);
+    }
+
+    /**
+     * 获取应用路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function path(...$paths): string
+    {
+        return base_path($this->directory(...$paths));
     }
 
     /**
@@ -115,6 +164,31 @@ class Application
     }
 
     /**
+     * 获取应用公共目录，相对于 `public_path`
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function publicDirectory(...$paths): string
+    {
+        array_unshift($paths, $this->publicDirectory);
+        return implode(DIRECTORY_SEPARATOR, $paths);
+    }
+
+    /**
+     * 获取应用公共路径
+     *
+     * @param ...$paths
+     *
+     * @return string
+     */
+    public function publicPath(...$paths): string
+    {
+        return public_path($this->publicDirectory(...$paths));
+    }
+
+    /**
      * 获取应用的命名空间
      *
      * @param ...$paths
@@ -127,7 +201,7 @@ class Application
     }
 
     /**
-     * 初始化配置
+     * 初始化应用配置
      *
      * @return void
      */
@@ -140,7 +214,7 @@ class Application
     }
 
     /**
-     * 获取 PinAdmin 配置值
+     * 获取 PinAdmin 应用配置值
      *
      * @param string|array|null $key
      * @param null|mixed $default

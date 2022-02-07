@@ -47,10 +47,12 @@ class ApplicationsCommand extends Command
                 count($data) + 1,
                 $options['name'],
                 $options['guard'],
+                $options['directory'],
                 $options['appDirectory'],
+                $options['publicDirectory'],
                 $options['status'] ? 'true' : 'false'
             ];
         }
-        $this->table(['Index', 'Name', 'Guard', 'Directory', 'Status'], $data);
+        $this->table(['Index', 'Name', 'Guard', 'Directory', 'App Directory', 'Public Directory', 'Status'], $data);
     }
 }
