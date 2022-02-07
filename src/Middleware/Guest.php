@@ -6,12 +6,16 @@
 
 namespace CodeSinging\PinAdmin\Middleware;
 
+use Closure;
+use CodeSinging\PinAdmin\Kernel\Admin;
 use Illuminate\Http\Request;
 
 class Guest
 {
-    public function handle(Request $request, \Closure $next, string $name)
+    public function handle(Request $request, Closure $next, string $name)
     {
+        Admin::boot($name);
+
         return $next($request);
     }
 }

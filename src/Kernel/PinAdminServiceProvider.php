@@ -37,7 +37,6 @@ class PinAdminServiceProvider extends ServiceProvider
      * @var array|string[]
      */
     protected array $middlewares = [
-        'admin.boot' => Boot::class,
         'admin.auth' => Auth::class,
         'admin.guest' => Guest::class,
     ];

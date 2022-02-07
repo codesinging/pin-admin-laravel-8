@@ -35,7 +35,6 @@ return [
     */
     'middlewares' => [
         'web',
-        'admin.boot:__DUMMY_NAME__',
     ],
 
     /*
@@ -47,7 +46,7 @@ return [
     |
     */
     'auth_middlewares' => [
-        'admin.auth:__DUMMY_NAME__',
+        'admin.auth:__DUMMY_NAME__,__DUMMY_GUARD__',
     ],
 
     /*
