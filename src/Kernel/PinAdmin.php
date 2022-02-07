@@ -32,10 +32,6 @@ use Illuminate\Support\Collection;
  * @method string routePrefix()
  * @method Application routeGroup(Closure $closure, bool $auth = true)
  * @method string link(string $path = '', array $parameters = [])
- * @method string resourceDirectory(...$paths)
- * @method string resourcePath(...$paths)
- * @method string assetDirectory(...$paths)
- * @method string assetPath(...$paths)
  * @method string asset(string $path = '')
  * @method string mix(string $path)
  */

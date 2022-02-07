@@ -50,6 +50,8 @@ class CreateCommandTest extends TestCase
 
         self::assertFileExists($configFile);
 
-        self::assertFileExists(Admin::assetPath('images/logo.svg'));
+        self::assertFileExists(Admin::publicPath('images/logo.svg'));
+
+        self::assertFileExists(Admin::path('build/webpack.mix.js'));
     }
 }

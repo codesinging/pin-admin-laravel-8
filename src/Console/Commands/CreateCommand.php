@@ -234,23 +234,25 @@ class CreateCommand extends Command
     {
         $this->title('Publishing application static resources');
 
-        $this->copyFile(
-            Admin::packagePath('stubs/assets/config.js'),
-            $this->app->path('assets/build/config.js'),
+        $this->copyFiles(
+            Admin::packagePath('stubs/build'),
+            $this->app->path('build'),
             [
                 '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
                 '__DUMMY_SRC_PATH__' => $this->app->directory('assets'),
             ]
         );
 
-        $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->assetPath('images'));
+        $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
 
-        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->app->resourcePath());
+        $this->copyDirectory(Admin::packagePath('resources/assets'), $this->app->path('assets'));
+        $this->copyDirectory(Admin::packagePath('resources/pages'), $this->app->path('pages'));
 
+        $webpack = sprintf('resources/%s/webpack.mix.js', $this->app->directory('build'));
         $this->addPackageScripts([
-            Admin::label('dev', '-') . ':' . $this->app->name() => sprintf('mix --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
-            Admin::label('watch', '-') . ':' . $this->app->name() => sprintf('mix watch --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
-            Admin::label('prod', '-') . ':' . $this->app->name() => sprintf('mix --production --mix-config=resources/%s/webpack.mix.js', $this->app->resourceDirectory()),
+            Admin::label('dev', '-') . ':' . $this->app->name() => "mix --mix-config=$webpack",
+            Admin::label('watch', '-') . ':' . $this->app->name() => "mix watch --mix-config=$webpack",
+            Admin::label('prod', '-') . ':' . $this->app->name() => "mix --production --mix-config=$webpack",
         ]);
 
         $this->addDependencies([

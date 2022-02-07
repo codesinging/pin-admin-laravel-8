@@ -315,57 +315,7 @@ class Application
     }
 
     /**
-     * 返回应用的静态文件目录，相对于 `public_path`
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function resourceDirectory(...$paths): string
-    {
-        array_unshift($paths, Str::kebab(self::BASE_APP_DIRECTORY), $this->name());
-        return implode('/', $paths);
-    }
-
-    /**
-     * 返回应用的静态文件路径
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function resourcePath(...$paths): string
-    {
-        return resource_path($this->resourceDirectory(...$paths));
-    }
-
-    /**
-     * 返回应用的静态文件目录，相对于 `public_path`
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function assetDirectory(...$paths): string
-    {
-        array_unshift($paths, 'static', Str::kebab(self::BASE_APP_DIRECTORY), $this->name());
-        return implode('/', $paths);
-    }
-
-    /**
-     * 返回应用的静态文件路径
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function assetPath(...$paths): string
-    {
-        return public_path($this->assetDirectory(...$paths));
-    }
-
-    /**
-     * 返回当前应用的静态文件路径
+     * 返回当前应用的静态文件地址
      *
      * @param string $path
      *
@@ -377,7 +327,7 @@ class Application
             return $path;
         }
 
-        return '/' . $this->assetDirectory($path);
+        return '/' . $this->publicDirectory($path);
     }
 
     /**

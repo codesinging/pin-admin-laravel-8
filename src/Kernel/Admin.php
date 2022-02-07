@@ -51,10 +51,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static int|string|null userId()
  * @method static string routePrefix()
  * @method static string link(string $path = '', array $parameters = [])
- * @method static string resourceDirectory(...$paths)
- * @method static string resourcePath(...$paths)
- * @method static string assetDirectory(...$paths)
- * @method static string assetPath(...$paths)
  * @method static string asset(string $path = '')
  * @method static string mix(string $path)
  */
