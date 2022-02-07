@@ -15,7 +15,7 @@ class CreateCommandTest extends TestCase
     protected function tearDown(): void
     {
         File::deleteDirectory(Admin::baseAppPath());
-        File::deleteDirectory(Admin::baseAssetDirectory());
+        File::deleteDirectory(Admin::basePublicDirectory());
     }
 
     public function testCreate()

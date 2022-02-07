@@ -69,6 +69,11 @@ class PinAdmin
     const BASE_APP_DIRECTORY = 'PinAdmin';
 
     /**
+     * PinAdmin 应用公共文件基础目录，相对于 `public_path`
+     */
+    const BASE_PUBLIC_DIRECTORY = 'pin-admin';
+
+    /**
      * 所有的 PinAdmin 应用实例
      *
      * @var Application[]
@@ -181,28 +186,28 @@ class PinAdmin
     }
 
     /**
-     * 返回应用的静态文件基础目录，相对于 `public_path`
+     * 返回应用的公共文件基础目录，相对于 `public_path`
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function baseAssetDirectory(...$paths): string
+    public function basePublicDirectory(...$paths): string
     {
-        array_unshift($paths, 'static', Str::kebab(self::BASE_APP_DIRECTORY));
+        array_unshift($paths, self::BASE_PUBLIC_DIRECTORY);
         return implode('/', $paths);
     }
 
     /**
-     * 返回应用的静态文件基础路径
+     * 返回应用的公共文件基础路径
      *
      * @param ...$paths
      *
      * @return string
      */
-    public function baseAssetPath(...$paths): string
+    public function basePublicPath(...$paths): string
     {
-        return public_path($this->baseAssetDirectory(...$paths));
+        return public_path($this->basePublicDirectory(...$paths));
     }
 
     /**

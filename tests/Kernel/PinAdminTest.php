@@ -65,13 +65,22 @@ class PinAdminTest extends TestCase
         self::assertEquals(app_path(PinAdmin::BASE_APP_DIRECTORY . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . 'Controllers'), $admin->baseAppPath('Admin', 'Controllers'));
     }
 
-    public function testBaseAssetDirectory()
+    public function testBasePublicDirectory()
     {
         $admin = new PinAdmin();
 
-        self::assertEquals('static/pin-admin', $admin->baseAssetDirectory());
-        self::assertEquals('static/pin-admin/admin', $admin->baseAssetDirectory('admin'));
-        self::assertEquals('static/pin-admin/admin/images', $admin->baseAssetDirectory('admin', 'images'));
+        self::assertEquals('pin-admin', $admin->basePublicDirectory());
+        self::assertEquals('pin-admin/admin', $admin->basePublicDirectory('admin'));
+        self::assertEquals('pin-admin/admin/images', $admin->basePublicDirectory('admin', 'images'));
+    }
+
+    public function testBasePublicPath()
+    {
+        $admin = new PinAdmin();
+
+        self::assertEquals(public_path('pin-admin'), $admin->basePublicPath());
+        self::assertEquals(public_path('pin-admin/admin'), $admin->basePublicPath('admin'));
+        self::assertEquals(public_path('pin-admin/admin/images'), $admin->basePublicPath('admin', 'images'));
     }
 
     public function testBaseResourceDirectory()
