@@ -41,7 +41,7 @@ class PinAdmin
     /**
      * PinAdmin 版本号
      */
-    const VERSION = '0.2.0';
+    const VERSION = '0.3.0';
 
     /**
      * PinAdmin 标记
