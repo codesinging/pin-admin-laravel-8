@@ -211,31 +211,6 @@ class PinAdmin
     }
 
     /**
-     * 返回应用的静态文件基础目录，相对于 `public_path`
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function baseResourceDirectory(...$paths): string
-    {
-        array_unshift($paths, Str::kebab(self::BASE_APP_DIRECTORY));
-        return implode('/', $paths);
-    }
-
-    /**
-     * 返回应用的静态文件基础路径
-     *
-     * @param ...$paths
-     *
-     * @return string
-     */
-    public function baseResourcePath(...$paths): string
-    {
-        return resource_path($this->baseResourceDirectory(...$paths));
-    }
-
-    /**
      * 是否已经安装 PinAdmin 包
      *
      * @return bool

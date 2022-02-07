@@ -25,8 +25,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static string baseAppPath(...$paths)
  * @method static string basePublicDirectory(...$paths)
  * @method static string basePublicPath(...$paths)
- * @method static string baseResourceDirectory(...$paths)
- * @method static string baseResourcePath(...$paths)
  * @method static boolean isInstalled()
  * @method static array indexes()
  * @method static PinAdmin load(string $name = null, array $options = [])
