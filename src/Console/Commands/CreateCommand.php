@@ -261,14 +261,9 @@ class CreateCommand extends Command
             $this->replaces()
         );
 
-        $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
+        $this->copyDirectory(Admin::packagePath('public'), $this->app->publicPath());
 
-        $this->copyDirectory(Admin::packagePath('resources/apis'), $this->app->path('apis'));
-        $this->copyDirectory(Admin::packagePath('resources/views'), $this->app->path('views'));
-        $this->copyDirectory(Admin::packagePath('resources/build'), $this->app->path('build'));
-        $this->copyDirectory(Admin::packagePath('resources/js'), $this->app->path('js'));
-        $this->copyDirectory(Admin::packagePath('resources/css'), $this->app->path('css'));
-        $this->copyDirectory(Admin::packagePath('resources/pages'), $this->app->path('pages'));
+        $this->copyDirectory(Admin::packagePath('resources'), $this->app->path());
 
         $webpack = $this->app->directory('build/webpack.mix.js');
         $this->addPackageScripts([
