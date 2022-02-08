@@ -263,6 +263,7 @@ class CreateCommand extends Command
 
         $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
 
+        $this->copyDirectory(Admin::packagePath('resources/apis'), $this->app->path('apis'));
         $this->copyDirectory(Admin::packagePath('resources/views'), $this->app->path('views'));
         $this->copyDirectory(Admin::packagePath('resources/build'), $this->app->path('build'));
         $this->copyDirectory(Admin::packagePath('resources/js'), $this->app->path('js'));
