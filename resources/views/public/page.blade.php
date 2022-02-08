@@ -6,8 +6,6 @@
     <div id="app"></div>
 
     <script>
-        const data = @json($data);
-        const page = '{{ $page }}'
-        createPage('#app', page, data)
+        createPage('#app', '{{ $page }}')
     </script>
 @endsection
