@@ -2,6 +2,7 @@ const mix = require('laravel-mix')
 
 const distPath = '__DUMMY_DIST_PATH__'
 const srcPath = '__DUMMY_SRC_PATH__'
+const browserSyncProxy = '__DUMMY_HOME_URL__'
 
 mix.setPublicPath(distPath)
     .setResourceRoot('./')
@@ -13,3 +14,4 @@ mix.setPublicPath(distPath)
         require('autoprefixer')
     ])
     .version()
+    .browserSync(browserSyncProxy)

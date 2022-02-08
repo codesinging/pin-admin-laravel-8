@@ -239,11 +239,7 @@ class CreateCommand extends Command
         $this->copyFiles(
             Admin::packagePath('stubs/build'),
             $this->app->path('build'),
-            [
-                '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
-                '__DUMMY_SRC_PATH__' => $this->app->directory(),
-                '__DUMMY_DIRECTORY__' => $this->app->directory(),
-            ]
+            $this->replaces()
         );
 
         $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
@@ -308,6 +304,9 @@ class CreateCommand extends Command
             '__DUMMY_CAMEL_NAME__' => Str::camel($this->appName),
             '__DUMMY_GUARD__' => $this->app->guard(),
             '__DUMMY_NAMESPACE__' => $this->app->getNamespace(),
-        ];
+            '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
+            '__DUMMY_SRC_PATH__' => $this->app->directory(),
+            '__DUMMY_DIRECTORY__' => $this->app->directory(),
+            '__DUMMY_HOME_URL__' => $this->app->homeUrl(true),];
     }
 }
