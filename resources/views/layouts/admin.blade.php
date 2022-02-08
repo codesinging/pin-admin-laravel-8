@@ -7,12 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', admin_config('name'))</title>
     <link rel="icon" href="{{ admin_asset('images/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ admin_mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ admin_mix('css/admin.css') }}">
     @yield('header')
 </head>
 <body>
 
-<script src="{{ admin_mix('js/app.js') }}"></script>
+<script src="{{ admin_mix('js/admin.js') }}"></script>
 
 @yield('body')
 

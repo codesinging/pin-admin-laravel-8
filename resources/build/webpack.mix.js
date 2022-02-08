@@ -4,8 +4,8 @@ const {distPath, srcPath, homeUrl} = require('../app')
 
 mix.setPublicPath(distPath)
     .setResourceRoot('./')
-    .js(srcPath + '/js/app.js', 'js/app.js').vue()
-    .postCss(srcPath + '/css/app.css', 'css/app.css', [
+    .js(srcPath + '/js/admin.js', 'js/admin.js').vue()
+    .postCss(srcPath + '/css/admin.css', 'css/admin.css', [
         require('tailwindcss')({
             config: srcPath + '/build/tailwind.config.js'
         }),

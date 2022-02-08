@@ -1,4 +1,4 @@
-@extends(admin_template('layouts.app'))
+@extends(admin_template('layouts.admin'))
 
 @section('title', $title ?? admin_config('name'))
 
