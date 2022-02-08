@@ -1,26 +1,24 @@
 import {createApp} from "vue";
 
 import ElementPlus from './plugins/element-plus'
+import {createPinia} from "pinia";
 
-window.createApp = (element, App) => {
+const vueApp = (element, App) => {
     const app = createApp(App)
 
     app.use(ElementPlus)
+    app.use(createPinia())
 
     app.mount(element)
 
     return app
 }
 
+window.createApp = (element, App) => {
+    return vueApp(element, App)
+}
+
 window.createPage = (element, page) => {
-
     const component = require(`../pages/${page}.vue`).default
-
-    const app = createApp(component)
-
-    app.use(ElementPlus)
-
-    app.mount(element)
-
-    return app
+    return vueApp(element, component)
 }
