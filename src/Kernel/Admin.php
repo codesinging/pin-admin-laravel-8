@@ -53,6 +53,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string link(string $path = '', array $parameters = [])
  * @method static string asset(string $path = '')
  * @method static string mix(string $path)
+ * @method static string homeUrl(boolean $withDomain = false)
  */
 class Admin extends Facade
 {

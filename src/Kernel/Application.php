@@ -13,6 +13,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -341,5 +342,20 @@ class Application
     public function mix(string $path): string
     {
         return mix($path, rtrim($this->asset(), '/'));
+    }
+
+    /**
+     * 返回当前 PinAdmin 应用首页地址
+     *
+     * @param bool $withDomain
+     *
+     * @return string
+     */
+    public function homeUrl(bool $withDomain = false): string
+    {
+        if ($withDomain) {
+            return (Request::secure() ? 'https://' : 'http://') . Request::server('HTTP_HOST') . '/' . $this->routePrefix();
+        }
+        return '/' . $this->routePrefix();
     }
 }

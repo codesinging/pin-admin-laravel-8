@@ -34,6 +34,7 @@ use Illuminate\Support\Collection;
  * @method string link(string $path = '', array $parameters = [])
  * @method string asset(string $path = '')
  * @method string mix(string $path)
+ * @method string homeUrl(boolean $withDomain = false)
  */
 class PinAdmin
 {
