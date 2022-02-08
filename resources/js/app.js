@@ -12,19 +12,13 @@ window.createApp = (element, App) => {
     return app
 }
 
-window.createPage = (element, page, data = null) => {
+window.createPage = (element, page) => {
 
     const component = require(`../pages/${page}.vue`).default
 
     const app = createApp(component)
 
     app.use(ElementPlus)
-
-    app.mixin({
-        data: () => ({
-            data,
-        })
-    })
 
     app.mount(element)
 

@@ -117,13 +117,12 @@ if (!function_exists('page')) {
      * 返回 PinAdmin 的 Vue 组件形式的视图内容
      *
      * @param string|null $view
-     * @param array $data
      *
      * @return Factory|View
      */
-    function page(string $view = null, array $data = [])
+    function page(string $view = null)
     {
-        return admin()->page($view, $data);
+        return admin()->page($view);
     }
 }
 

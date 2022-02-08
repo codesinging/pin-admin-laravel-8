@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Application[] apps()
  * @method static string template(string $path)
  * @method static Factory|View view(string $view = null, array $data = [], array $mergeData = [])
- * @method static Factory|View page(string $view = null, array $data = [])
+ * @method static Factory|View page(string $view = null)
  * @method static JsonResponse success($message = null, $data = null)
  * @method static JsonResponse error(string $message = null, int $code = -1, $data = null)
  * @method static Application routeGroup(Closure $closure, bool $auth = true)

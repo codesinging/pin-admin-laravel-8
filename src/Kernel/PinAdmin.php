@@ -314,13 +314,12 @@ class PinAdmin
      * 返回 PinAdmin 的 Vue 组件形式的视图内容
      *
      * @param string $page
-     * @param array $data
      *
      * @return Factory|View
      */
-    public function page(string $page, array $data = [])
+    public function page(string $page)
     {
-        return $this->view('public/page', compact('page', 'data'));
+        return $this->view('public/page', compact('page'));
     }
 
     /**
