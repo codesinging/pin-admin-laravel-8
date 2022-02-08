@@ -254,16 +254,17 @@ class CreateCommand extends Command
     {
         $this->title('Publishing application static resources');
 
-        $this->copyDirectory(Admin::packagePath('resources/views'), $this->app->path('views'));
 
-        $this->copyFiles(
-            Admin::packagePath('stubs/build'),
-            $this->app->path('build'),
+        $this->copyFile(
+            Admin::packagePath('stubs/app.js'),
+            $this->app->path('app.js'),
             $this->replaces()
         );
 
         $this->copyDirectory(Admin::packagePath('resources/images'), $this->app->publicPath('images'));
 
+        $this->copyDirectory(Admin::packagePath('resources/views'), $this->app->path('views'));
+        $this->copyDirectory(Admin::packagePath('resources/build'), $this->app->path('build'));
         $this->copyDirectory(Admin::packagePath('resources/js'), $this->app->path('js'));
         $this->copyDirectory(Admin::packagePath('resources/css'), $this->app->path('css'));
         $this->copyDirectory(Admin::packagePath('resources/pages'), $this->app->path('pages'));
@@ -295,7 +296,7 @@ class CreateCommand extends Command
             'status' => true,
         ];
         $this->copyFile(
-            Admin::packagePath('stubs', 'index', 'apps.php'),
+            Admin::packagePath('stubs', 'apps.php'),
             Admin::basePath('apps.php'),
             ['__DUMMY_INDEXES__' => $this->varExport($this->indexes, true)]
         );
