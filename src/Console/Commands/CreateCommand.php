@@ -68,6 +68,26 @@ class CreateCommand extends Command
     ];
 
     /**
+     * @var array|string[]
+     */
+    protected array $dependencies = [
+        'vue' => '^3.2.29',
+        'tailwindcss' => '^3.0.18',
+        'element-plus' => '^2.0.1',
+        'pinia' => '^2.0.11',
+        'axios' => '^0.25.0',
+    ];
+
+    /**
+     * @var array|string[]
+     */
+    protected array $devDependencies = [
+        'vue-loader' => '^16.2.0',
+        'postcss' => '^8.1.14',
+        'autoprefixer' => '^10.4.2',
+    ];
+
+    /**
      * Execute the console command.
      */
     public function handle()
@@ -255,18 +275,9 @@ class CreateCommand extends Command
             Admin::label('prod', '-') . ':' . $this->app->name() => "mix --production --mix-config=$webpack",
         ]);
 
-        $this->addDependencies([
-            'vue' => '^3.2.29',
-            'tailwindcss' => '^3.0.18',
-            'element-plus' => '^2.0.1',
-            'pinia' => '^2.0.11',
-        ]);
+        $this->addDependencies($this->dependencies);
 
-        $this->addDevDependencies([
-            'vue-loader' => '^16.2.0',
-            'postcss' => '^8.1.14',
-            'autoprefixer' => '^10.4.2',
-        ]);
+        $this->addDevDependencies($this->devDependencies);
     }
 
     /**
