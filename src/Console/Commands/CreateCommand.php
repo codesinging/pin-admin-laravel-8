@@ -262,12 +262,13 @@ class CreateCommand extends Command
         $this->addDependencies([
             'vue' => '^3.2.29',
             'tailwindcss' => '^3.0.18',
-            'postcss' => '^8.1.14',
-            'autoprefixer' => '^10.4.2',
+            'element-plus' => '^2.0.1',
         ]);
 
         $this->addDevDependencies([
-            'vue-loader' => '^16.2.0'
+            'vue-loader' => '^16.2.0',
+            'postcss' => '^8.1.14',
+            'autoprefixer' => '^10.4.2',
         ]);
     }
 
