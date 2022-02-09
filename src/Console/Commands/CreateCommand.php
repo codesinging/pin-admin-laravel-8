@@ -255,8 +255,8 @@ class CreateCommand extends Command
         $this->title('Publishing application static resources');
 
         $this->copyFile(
-            Admin::packagePath('stubs/app.js'),
-            $this->app->path('app.js'),
+            Admin::packagePath('stubs/env.js'),
+            $this->app->path('env.js'),
             $this->replaces()
         );
 

@@ -1,6 +1,6 @@
 const mix = require('laravel-mix')
 
-const {distPath, srcPath, homeUrl} = require('../app')
+const {distPath, srcPath, homeUrl} = require('../env')
 
 mix.setPublicPath(distPath)
     .setResourceRoot('./')

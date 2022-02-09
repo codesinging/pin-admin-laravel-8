@@ -1,5 +1,7 @@
+import {baseUrl} from '../../env'
+
 export default {
-    baseURL: import.meta.env.VITE_BASE_URL,
+    baseURL: baseUrl,
     timeout: 10 * 1000,
     headers: {
         'X-Requested-With': 'XMLHttpRequest'

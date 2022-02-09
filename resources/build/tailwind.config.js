@@ -1,4 +1,4 @@
-const { appPath } = require('../app')
+const { appPath } = require('../env')
 
 module.exports = {
   content: [
