@@ -254,7 +254,6 @@ class CreateCommand extends Command
     {
         $this->title('Publishing application static resources');
 
-
         $this->copyFile(
             Admin::packagePath('stubs/app.js'),
             $this->app->path('app.js'),
@@ -274,7 +273,6 @@ class CreateCommand extends Command
         ]);
 
         $this->addDependencies($this->dependencies);
-
         $this->addDevDependencies($this->devDependencies);
     }
 
@@ -317,6 +315,8 @@ class CreateCommand extends Command
             '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
             '__DUMMY_SRC_PATH__' => $this->app->directory(),
             '__DUMMY_DIRECTORY__' => $this->app->directory(),
-            '__DUMMY_HOME_URL__' => $this->app->homeUrl(true),];
+            '__DUMMY_BASE_URL__' => $this->app->homeUrl(),
+            '__DUMMY_HOME_URL__' => $this->app->homeUrl(true),
+        ];
     }
 }
