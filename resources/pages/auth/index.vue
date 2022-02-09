@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen flex items-center justify-center">
         <el-card header="管理员登录" class="w-96">
-            <el-form>
+            <el-form :model="data" :rules="rules" ref="form">
                 <el-form-item prop="mobile">
                     <el-input v-model="data.mobile">
                         <template #prepend>
@@ -29,6 +29,8 @@
 <script setup>
 import {reactive, ref} from "vue";
 import useState from "../../js/store/state";
+import message from "../../js/utils/message";
+import apis from "../../apis";
 
 const state = useState()
 
@@ -37,20 +39,27 @@ const data = reactive({
     password: '',
 })
 
-const onSubmit = () => {
-    state.set('loading')
-
-    setTimeout(() => {
-        state.unset('loading')
-    }, 3000)
+const rules = {
+    mobile: [
+        {required: true, message: '手机号码不能为空'}
+    ],
+    password: [
+        {required: true, message: '登录密码不能为空'}
+    ],
 }
 
-const onSetOtherState = () => {
-    state.set('refreshing', 2)
+const form = ref()
 
-    setTimeout(() => {
-        state.unset('refreshing', 2)
-    }, 4000)
+const onSubmit = () => {
+    form.value.validate(valid => {
+        if (valid){
+            apis.auth.login(data).then(res=>{
+                console.log(res)
+            })
+        } else {
+            message.warning('表单验证失败')
+        }
+    })
 }
 
 </script>
