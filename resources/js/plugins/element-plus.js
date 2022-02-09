@@ -1,4 +1,4 @@
-import ElementPlus from 'element-plus/dist/index.full'
+import ElementPlus from 'element-plus'
 import config from '../config/element-plus'
 import 'element-plus/dist/index.css'
 

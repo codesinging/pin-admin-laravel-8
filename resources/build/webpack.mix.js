@@ -13,3 +13,15 @@ mix.setPublicPath(distPath)
     ])
     .version()
     .browserSync(homeUrl)
+    .webpackConfig({
+        module: {
+            rules: [
+                {
+                    test: /\.mjs$/,
+                    resolve: {fullySpecified: false},
+                    include: /node_modules/,
+                    type: "javascript/auto"
+                }
+            ]
+        },
+    })
