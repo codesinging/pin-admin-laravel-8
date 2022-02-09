@@ -74,7 +74,7 @@ class CreateCommand extends Command
         'vue' => '^3.2.29',
         'tailwindcss' => '^3.0.18',
         'element-plus' => '^2.0.1',
-        'pinia' => '^2.0.11',
+        'vuex' => '^4.0.2',
         'axios' => '^0.25.0',
     ];
 
