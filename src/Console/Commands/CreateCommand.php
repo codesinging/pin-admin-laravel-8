@@ -266,10 +266,11 @@ class CreateCommand extends Command
         $this->copyDirectory(Admin::packagePath('resources'), $this->app->path());
 
         $webpack = $this->app->directory('build/webpack.mix.js');
+        $scriptName = Admin::label($this->app->name(), ':');
         $this->addPackageScripts([
-            Admin::label('dev', '-') . ':' . $this->app->name() => "mix --mix-config=$webpack",
-            Admin::label('watch', '-') . ':' . $this->app->name() => "mix watch --mix-config=$webpack",
-            Admin::label('prod', '-') . ':' . $this->app->name() => "mix --production --mix-config=$webpack",
+            'dev:' . $scriptName => "mix --mix-config=$webpack",
+            'watch:' . $scriptName => "mix watch --mix-config=$webpack",
+            'prod:' . $scriptName => "mix --production --mix-config=$webpack",
         ]);
 
         $this->addDependencies($this->dependencies);
