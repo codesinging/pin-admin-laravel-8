@@ -11,4 +11,5 @@ use Illuminate\Foundation\Auth\User;
 class AuthModel extends User
 {
     use SerializeDate;
+    use IdeHelpers;
 }
