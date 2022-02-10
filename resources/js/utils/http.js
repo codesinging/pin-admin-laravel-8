@@ -1,20 +1,18 @@
 import axios from "axios"
 import config from '../config/http'
-import useState from "../store/state"
+import state from "../store/state"
 import message from "./message"
 
 const defaultLabel = 'loading'
-
-const state = useState()
 
 const http = axios.create(config)
 
 http.interceptors.request.use(
     config => {
-        state.set(defaultLabel)
+        state().set(defaultLabel)
 
         if (config?.label) {
-            state.set(config.label)
+            state().set(config.label)
         }
 
         return config
@@ -27,10 +25,10 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
     response => {
-        state.unset(defaultLabel)
+        state().unset(defaultLabel)
 
         if (response?.config?.label) {
-            state.unset(response.config.label)
+            state().unset(response.config.label)
         }
 
         if (response.status === 200) {
@@ -54,16 +52,16 @@ http.interceptors.response.use(
     error => {
         error = error.toJSON()
 
-        state.unset(defaultLabel)
+        state().unset(defaultLabel)
 
         if (error.config?.label) {
-            state.unset(error.config.label)
+            state().unset(error.config.label)
         }
 
         console.log('http.response.status.error', error)
 
         if (error.config.message !== false) {
-            if (err.status === null) {
+            if (error.status === null) {
                 message.error('网络或服务器连接错误')
             } else {
                 message.error(`[${error.status}]请求响应状态异常`)
