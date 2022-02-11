@@ -34,7 +34,7 @@ http.interceptors.response.use(
         if (response.status === 200) {
             if (response.data.code === 0) {
                 if (response?.config?.message !== false && response?.data?.message) {
-                    message.success(response?.config?.message || response.data.message())
+                    message.success(response?.config?.message || response.data.message)
                 }
                 if (response.data.data !== undefined) {
                     return response.data.data
