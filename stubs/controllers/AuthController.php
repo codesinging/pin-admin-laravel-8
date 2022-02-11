@@ -26,11 +26,11 @@ class AuthController extends Controller
         ]);
 
         if (Admin::auth()->attempt($credentials)) {
-            return $this->success('登录成功');
-        }
+            if (!Admin::user()['status']) {
+                return $this->error('用户状态异常');
+            }
 
-        if (!Admin::user()['status']) {
-            return $this->error('用户状态异常');
+            return $this->success('登录成功');
         }
 
         return $this->error('账号和密码不匹配');
