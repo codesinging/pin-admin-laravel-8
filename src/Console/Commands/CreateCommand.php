@@ -104,6 +104,9 @@ class CreateCommand extends Command
                 $this->createControllers();
                 $this->createModels();
                 $this->createMigrations();
+                $this->createSeeders();
+                $this->runMigrations();
+                $this->runSeeders();
                 $this->publishConfiguration();
                 $this->publishResources();
                 $this->updateIndexes();
@@ -224,6 +227,44 @@ class CreateCommand extends Command
             $this->replaces(),
             $this->replaces()
         );
+    }
+
+    /**
+     * Create default application seeders.
+     *
+     * @return void
+     */
+    private function createSeeders(): void
+    {
+        $this->title('Create application seeders');
+        $this->copyFiles(
+            Admin::packagePath('stubs/seeders'),
+            $this->app->appPath('Seeders'),
+            $this->replaces(),
+            $this->replaces()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    private function runMigrations(): void
+    {
+        $this->title('Run application migrations');
+        $this->call('migrate', [
+            '--path' => $this->app->directory('migrations')
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    private function runSeeders(): void
+    {
+        $this->title('Run application seeders');
+        $this->call('db:seed', [
+            '--class' => $this->app->getNamespace('Seeders/DatabaseSeeder'),
+        ]);
     }
 
     /**
