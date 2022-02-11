@@ -320,6 +320,7 @@ class PinAdmin
      */
     public function page(string $page)
     {
+        $page = str_replace('.', '/', $page);
         return $this->view('public/page', compact('page'));
     }
 
