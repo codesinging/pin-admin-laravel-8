@@ -11,7 +11,6 @@ use CodeSinging\PinAdmin\Model\AuthModel;
 class __DUMMY_STUDLY_NAME__User extends AuthModel
 {
     protected $fillable = [
-        'mobile',
         'name',
         'password',
         'status',
