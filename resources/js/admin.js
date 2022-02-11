@@ -19,6 +19,11 @@ window.createApp = (element, App) => {
 }
 
 window.createPage = (element, page) => {
-    const component = require(`../pages/${page}.vue`).default
+    let component
+    try {
+        component = require(`../pages/${page}.vue`).default
+    } catch (e) {
+        component = require(`../pages/public/404.vue`).default
+    }
     return vueApp(element, component)
 }
