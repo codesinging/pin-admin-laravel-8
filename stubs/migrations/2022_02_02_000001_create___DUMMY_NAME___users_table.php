@@ -19,8 +19,7 @@ class Create__DUMMY_STUDLY_NAME__UsersTable extends Migration
     {
         Schema::create('__DUMMY_NAME___users', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile')->unique();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('password');
             $table->boolean('status')->default(true);
             $table->timestamps();
