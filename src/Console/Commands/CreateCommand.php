@@ -75,7 +75,7 @@ class CreateCommand extends Command
         'tailwindcss' => '^3.0.18',
         'element-plus' => '^2.0.1',
         'pinia' => '^2.0.11',
-        'axios' => '^0.25.0',
+        'axios' => '^0.21',
     ];
 
     /**
