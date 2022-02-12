@@ -347,6 +347,7 @@ class CreateCommand extends Command
             '__DUMMY_DIRECTORY__' => $this->app->directory(),
             '__DUMMY_BASE_URL__' => $this->app->homeUrl(),
             '__DUMMY_HOME_URL__' => $this->app->homeUrl(true),
+            '__DUMMY_ASSET_URL__' => $this->app->asset(),
         ];
     }
 }
