@@ -77,6 +77,20 @@ class PackageJson
     }
 
     /**
+     * 排序
+     * @param string $key
+     *
+     * @return $this
+     */
+    public function sort(string $key): PackageJson
+    {
+        if (isset($this->data[$key]) && is_array($this->data[$key])){
+            ksort($this->data[$key]);
+        }
+        return $this;
+    }
+
+    /**
      * 返回全部数据
      *
      * @return array
