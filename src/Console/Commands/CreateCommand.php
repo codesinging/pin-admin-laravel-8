@@ -286,7 +286,6 @@ class CreateCommand extends Command
         );
 
         $this->copyDirectory(Admin::packagePath('public'), $this->app->publicPath());
-
         $this->copyDirectory(Admin::packagePath('resources'), $this->app->path('resources'));
     }
 
@@ -303,8 +302,8 @@ class CreateCommand extends Command
             'prod:' . $scriptName => "mix --production --mix-config=$webpack",
         ]);
 
-        $this->addDependencies($this->dependencies);
-        $this->addDevDependencies($this->devDependencies);
+        empty($this->dependencies) or $this->addDependencies($this->dependencies);
+        empty($this->devDependencies) or $this->addDevDependencies($this->devDependencies);
     }
 
     /**
