@@ -1,4 +1,4 @@
-import {baseUrl} from '../../env'
+import {baseUrl} from '../env'
 
 export default {
     baseURL: baseUrl,

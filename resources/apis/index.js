@@ -1,4 +1,4 @@
-import http from "../js/utils/http"
+import http from "../utils/http"
 
 export default {
     auth: {

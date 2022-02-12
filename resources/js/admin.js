@@ -1,6 +1,6 @@
 import {createApp} from "vue";
 
-import ElementPlus from './plugins/element-plus'
+import ElementPlus from '../plugins/element-plus'
 import {createPinia} from "pinia";
 
 const vueApp = (element, App) => {

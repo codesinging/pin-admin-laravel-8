@@ -1,9 +1,9 @@
-const { appPath } = require('../env')
+const { srcPath } = require('../env')
 
 module.exports = {
   content: [
-      appPath + '/pages/**/*.vue',
-      appPath + '/views/**/*.blade.php',
+      srcPath + '/pages/**/*.vue',
+      srcPath + '/views/**/*.blade.php',
   ],
   theme: {
     extend: {},

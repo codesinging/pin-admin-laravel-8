@@ -28,8 +28,8 @@
 
 <script setup>
 import {reactive, ref} from "vue";
-import useState from "../../js/store/state";
-import message from "../../js/utils/message";
+import useState from "../../store/state";
+import message from "../../utils/message";
 import apis from "../../apis";
 import {homeUrl} from '../../env'
 
