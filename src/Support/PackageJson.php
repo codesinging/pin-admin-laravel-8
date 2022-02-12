@@ -63,7 +63,7 @@ class PackageJson
      */
     public function merge(string $key, array $value): PackageJson
     {
-        return $this->set($key, $this->get($key, []) + $value);
+        return $this->set($key, array_merge($this->get($key, []), $value));
     }
 
     /**
@@ -78,6 +78,7 @@ class PackageJson
 
     /**
      * 返回全部数据
+     *
      * @return array
      */
     public function data(): array
@@ -87,6 +88,7 @@ class PackageJson
 
     /**
      * 返回文件名
+     *
      * @return string
      */
     public function file(): string
