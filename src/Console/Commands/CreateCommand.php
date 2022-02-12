@@ -58,18 +58,17 @@ class CreateCommand extends Command
     /**
      * @var array|string[]
      */
-    protected array $dependencies = [
-        'vue' => '^3.2.29',
-        'tailwindcss' => '^3.0.18',
-        'element-plus' => '^2.0.1',
-        'pinia' => '^2.0.11',
-        'axios' => '^0.25.0',
-    ];
+    protected array $dependencies = [];
 
     /**
      * @var array|string[]
      */
     protected array $devDependencies = [
+        'vue' => '^3.2.29',
+        'tailwindcss' => '^3.0.18',
+        'element-plus' => '^2.0.1',
+        'pinia' => '^2.0.11',
+        'axios' => '^0.25.0',
         'vue-loader' => '^16.2.0',
         'postcss' => '^8.1.14',
         'autoprefixer' => '^10.4.2',
