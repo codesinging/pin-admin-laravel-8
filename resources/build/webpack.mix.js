@@ -1,9 +1,9 @@
 const mix = require('laravel-mix')
 
-const {distPath, srcPath, homeUrl} = require('../env')
+const {distPath, srcPath, homeUrl, assetUrl} = require('../env')
 
 mix.setPublicPath(distPath)
-    .setResourceRoot('./')
+    .setResourceRoot(assetUrl)
     .js(srcPath + '/js/admin.js', 'js/admin.js').vue()
     .postCss(srcPath + '/css/admin.css', 'css/admin.css', [
         require('tailwindcss')({
