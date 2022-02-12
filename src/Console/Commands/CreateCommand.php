@@ -56,18 +56,6 @@ class CreateCommand extends Command
     protected array $indexes = [];
 
     /**
-     * The application structure directories
-     *
-     * @var array
-     */
-    protected array $directories = [
-        'Controllers',
-        'Models',
-        'Middleware',
-        'Requests',
-    ];
-
-    /**
      * @var array|string[]
      */
     protected array $dependencies = [
@@ -109,6 +97,7 @@ class CreateCommand extends Command
                 $this->runSeeders();
                 $this->publishConfiguration();
                 $this->publishResources();
+                $this->updatePackageJson();
                 $this->updateIndexes();
             }
         } else {
@@ -156,10 +145,6 @@ class CreateCommand extends Command
         $this->makeDirectory($this->app->path());
         $this->makeDirectory($this->app->appPath());
         $this->makeDirectory($this->app->publicPath());
-
-        foreach ($this->directories as $directory) {
-            $this->makeDirectory($this->app->appPath($directory));
-        }
     }
 
     /**
@@ -296,16 +281,22 @@ class CreateCommand extends Command
         $this->title('Publishing application static resources');
 
         $this->copyFile(
-            Admin::packagePath('stubs/env.js'),
-            $this->app->path('env.js'),
+            Admin::packagePath('stubs/resources/env.js'),
+            $this->app->path('resources/env.js'),
             $this->replaces()
         );
 
         $this->copyDirectory(Admin::packagePath('public'), $this->app->publicPath());
 
-        $this->copyDirectory(Admin::packagePath('resources'), $this->app->path());
+        $this->copyDirectory(Admin::packagePath('resources'), $this->app->path('resources'));
+    }
 
-        $webpack = $this->app->directory('build/webpack.mix.js');
+    /**
+     * @return void
+     */
+    private function updatePackageJson(): void
+    {
+        $webpack = $this->app->directory('resources/build/webpack.mix.js');
         $scriptName = Admin::label($this->app->name(), ':');
         $this->addPackageScripts([
             'dev:' . $scriptName => "mix --mix-config=$webpack",
@@ -354,7 +345,7 @@ class CreateCommand extends Command
             '__DUMMY_GUARD__' => $this->app->guard(),
             '__DUMMY_NAMESPACE__' => $this->app->getNamespace(),
             '__DUMMY_DIST_PATH__' => 'public/' . $this->app->publicDirectory(),
-            '__DUMMY_SRC_PATH__' => $this->app->directory(),
+            '__DUMMY_SRC_PATH__' => $this->app->directory('resources'),
             '__DUMMY_DIRECTORY__' => $this->app->directory(),
             '__DUMMY_BASE_URL__' => $this->app->homeUrl(),
             '__DUMMY_HOME_URL__' => $this->app->homeUrl(true),
