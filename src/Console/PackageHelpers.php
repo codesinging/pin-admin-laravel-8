@@ -37,7 +37,7 @@ trait PackageHelpers
     {
         $packageJson = new PackageJson();;
 
-        if ($packageJson->merge('devDependencies', $dependencies)->save()) {
+        if ($packageJson->merge('devDependencies', $dependencies)->sort('devDependencies')->save()) {
             $this->info("Added dev dependencies in file [{$packageJson->file()}]");
         } else {
             $this->warn("Failed to add dev dependencies in file [{$packageJson->file()}]");
@@ -54,7 +54,7 @@ trait PackageHelpers
     {
         $packageJson = new PackageJson();;
 
-        if ($packageJson->merge('dependencies', $dependencies)->save()) {
+        if ($packageJson->merge('dependencies', $dependencies)->sort('dependencies')->save()) {
             $this->info("Added dependencies in file [{$packageJson->file()}]");
         } else {
             $this->warn("Failed to add dependencies in file [{$packageJson->file()}]");
